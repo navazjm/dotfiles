@@ -1,10 +1,7 @@
 #!/usr/bin/env sh
-
-sudo yabai --uninstall-sa
-sudo yabai --install-sa
-sudo yabai --load-sa
+sudo /opt/homebrew/bin/yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo /opt/homebrew/bin/yabai --load-sa"
 brew services restart skhd
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # global settings
 yabai -m config mouse_follows_focus          off
@@ -31,11 +28,11 @@ yabai -m config mouse_action2                resize
 yabai -m config mouse_drop_action            swap
 
 yabai -m config layout                       bsp
-yabai -m config top_padding                  10
-yabai -m config bottom_padding               10
-yabai -m config left_padding                 10
-yabai -m config right_padding                10
-yabai -m config window_gap                   10
+yabai -m config top_padding                  5
+yabai -m config bottom_padding               5
+yabai -m config left_padding                 5
+yabai -m config right_padding                5
+yabai -m config window_gap                   5
 
 yabai -m space 1 --label I
 yabai -m space 2 --label II
@@ -55,7 +52,7 @@ yabai -m rule --add app="Obs"                   space=6
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 
-yabai -m config external_bar all:27:0
-# yabai -m config external_bar all:0:0
+# yabai -m config external_bar all:27:0
+yabai -m config external_bar all:0:0
 
 echo "yabai configuration loaded.."

@@ -1,0 +1,1 @@
+{"title":"Ctrl Key → Hyper Key (⌃⌥⇧⌘)","rules":[{"description":"Ctrl Key → Hyper Key (⌃⌥⇧⌘)","manipulators":[{"from":{"key_code":"left_alt","modifiers":{"optional":["caps_lock"]}},"to":[{"key_code":"left_control","modifiers":["left_command","left_option"]}],"type":"basic"}]}]}

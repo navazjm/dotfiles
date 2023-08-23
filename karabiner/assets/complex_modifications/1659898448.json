@@ -1,0 +1,1 @@
+{"title":"Caps Lock → Hyper Key (⌃⌥⇧⌘)","rules":[{"description":"Caps Lock → Hyper Key (⌃⌥⇧⌘)","manipulators":[{"from":{"key_code":"caps_lock","modifiers":{"optional":["caps_lock"]}},"to":[{"key_code":"left_control","modifiers":["left_command","left_option"]}],"type":"basic"}]}]}

@@ -17,9 +17,6 @@
 - Multiplexer => [Tmux](./.tmux.conf)
 - Shell => [ZSH](./.zshrc)
 
-### Text Editor / IDE
-- [Neovim](./nvim/init.lua)
-
 ### Window Manager
 - MacOS Tiling Window Manager => [Yabai](./yabairc)
 - Keyboard Customizer => [Karabiner](./karabiner/karabiner.json)

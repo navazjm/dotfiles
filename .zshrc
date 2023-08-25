@@ -56,3 +56,11 @@ alias gd="git diff"
 
 alias cl="clear"
 alias ..="cd .."
+
+
+source /Users/navazjm/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_RESULTS=25
+export MCFLY_LIGHT=TRUE
+eval "$(mcfly init zsh)"

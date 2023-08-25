@@ -1,13 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <h3 align="center">Dotfiles</h3>
-
-  <p align="center">
-  The dotfiles for all the tools and programs I use
-  </p>
-</p>
-
 ## Main Tools Used
 
 ### Terminal Tools

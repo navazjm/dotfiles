@@ -1,10 +1,7 @@
-==========================
-Dotfiles - Navazjm's Dotfiles
-==========================
+# Navazjm's Dotfiles
 
 
-Tools
---------
+## Tools
 
 * AwesomeWM => [AwesomeWM](./awesome/rc.lua)
 * Terminal Emulator => [Alacritty](./alacritty/alacritty.yml)
@@ -14,18 +11,36 @@ Tools
 * Shell => [ZSH](./.zshrc)
 
 
-Installation
-------------
+## Installation
+
 * From source:
 
-  * GIT clone (`hosted on GitHub`_)::
+  * GIT clone
 
+    ```sh
     git clone https://github.com/navazjm/dotfiles
     cd dotfiles
+    ```
 
-  * Make ::
+  * Make executable shell scripts
+
+    ```sh
+    chmod a+x setup.sh
+    ```
+
+    ```sh
     chmod a+x install.sh
+    ```
 
-  * and instasll ::
+  * Run setup
 
+    ```sh
+    ./setup.sh
+    ```
+
+  * Run installation
+
+    ```sh
     ./install.sh
+    ```
+

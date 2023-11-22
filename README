@@ -1,0 +1,31 @@
+==========================
+Dotfiles - Navazjm's Dotfiles
+==========================
+
+
+Tools
+--------
+
+* AwesomeWM => [AwesomeWM](./awesome/rc.lua)
+* Terminal Emulator => [Alacritty](./alacritty/alacritty.yml)
+* Text Editor => [Neovim](./nvim/init.lua)
+* Prompt => [Starship](./starship.toml)
+* Multiplexer => [Tmux](./.tmux.conf)
+* Shell => [ZSH](./.zshrc)
+
+
+Installation
+------------
+* From source:
+
+  * GIT clone (`hosted on GitHub`_)::
+
+    git clone https://github.com/navazjm/dotfiles
+    cd dotfiles
+
+  * Make ::
+    chmod a+x install.sh
+
+  * and instasll ::
+
+    ./install.sh

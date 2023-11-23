@@ -24,5 +24,12 @@ chsh -s $(which zsh)
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+# go
+sudo rm -rf /usr/local/go
+cd ~/Downloads/
+curl -LJO https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
+cd ~/.config/dotfiles
+
 # open zsh shell inside bash shell
 zsh

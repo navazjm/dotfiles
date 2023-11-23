@@ -2,6 +2,9 @@
 
 #clangd
 sudo apt-get -y install clangd
+
+#clang-format
+sudo apt install clang-format
  
 #tmux
 sudo apt install tmux -y
@@ -40,6 +43,9 @@ nvm install node
 
 # rg
 sudo apt-get install ripgrep -y
+
+# fd
+cargo install fd-find
 
 #stylua
 cargo install stylua

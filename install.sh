@@ -1,22 +1,23 @@
 #!/bin/sh
 
-#clangd
+# clangd
 sudo apt-get -y install clangd
 
-#clang-format
+# clang-format
 sudo apt install clang-format
- 
-#tmux
+
+# tmux
 sudo apt install tmux -y
 cp ~/.config/dotfiles/.tmux.conf ~/
-#tmux plugin manager
+
+# tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-#starship
+# starship -> shell prompt
 curl -sS https://starship.rs/install.sh | sh
 cp ~/.config/dotfiles/starship.toml ~/.config/
 
-# alacritty
+# alacritty -> terminal emulator
 git clone https://github.com/alacritty/alacritty.git ~/repos/alacritty
 cd ~/repos/alacritty
 sudo apt install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 -y
@@ -29,7 +30,7 @@ sudo update-desktop-database
 cd ~/.config/dotfiles
 cp -r ~/.config/dotfiles/alacritty/ ~/.config/
 
-#eza
+# eza -> better ls
 git clone https://github.com/eza-community/eza.git ~/repos/eza
 cd ~/repos/eza
 cargo install --path .
@@ -40,33 +41,34 @@ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 exec zsh
 cd ~/.config/dotfiles
 nvm install node
+nvm use node
+npm i -g vscode-langservers-extracted # needed for mason to install web dev related LSPs
 
-# rg
+# rg - better grep
 sudo apt-get install ripgrep -y
 
-# fd
+# fd - better find
 cargo install fd-find
 
-#stylua
+# stylua
 cargo install stylua
 
-#brave browser
+# brave browser
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
 sudo apt install brave-browser -y
 
-#pulseaudio
+# pulseaudio
 sudo apt install pulseaudio -y
 
-#pavucontrol
+# pavucontrol
 sudo apt-get install pavucontrol -y
 
-
-#vlc
+# vlc
 sudo apt install vlc -y
 
-#arandr
+# arandr
 sudo apt install arandr -y
 
 #docker
@@ -86,13 +88,13 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
-#docker desktop
+# docker desktop
 cd ~/Downloads/
 curl -O https://desktop.docker.com/linux/main/amd64/docker-desktop-4.25.2-amd64.deb
 sudo apt-get install ./docker-desktop-4.25.2-amd64.deb -y
 cd ~/.config/dotfiles
 
-#neovim
+# neovim
 mkdir ~/repos/nvim
 cd ~/repos/nvim
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
@@ -102,7 +104,7 @@ sudo ln -s ~/repos/nvim/squashfs-root/AppRun /usr/bin/nvim
 cd ~/.config/dotfiles/
 cp -r ~/.config/dotfiles/nvim/ ~/.config/
 
-#awesomewm
+# awesomewm
 sudo apt-get install awesome
 cp -r ~/.config/dotfiles/awesome/ ~/.config/
 

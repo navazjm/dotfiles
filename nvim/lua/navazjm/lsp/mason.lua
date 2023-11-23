@@ -9,12 +9,12 @@ if not status_ok_1 then
 end
 
 local servers = {
-    "cssls",
-    "cssmodules_ls",
-    "emmet_ls",
-    "html",
-    "lua_ls",
-    "tsserver",
+    "css-lsp",
+    "cssmodules-language-server",
+    "emmet-ls",
+    "html-lsp",
+    "luau-ls",
+    "typescript-language-server",
     "clangd",
     "gopls",
     "rust_analyzer",

@@ -1,4 +1,7 @@
 #!/bin/sh
+
+#clangd
+sudo apt-get -y install clangd
  
 #tmux
 sudo apt install tmux -y

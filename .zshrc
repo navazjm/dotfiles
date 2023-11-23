@@ -55,3 +55,6 @@ alias gd="git diff"
 
 alias cl="clear"
 alias ..="cd .."
+
+alias n="nvim"
+alias t="tmux"

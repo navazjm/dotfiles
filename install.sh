@@ -59,6 +59,10 @@ sudo apt install brave-browser -y
 #pulseaudio
 sudo apt install pulseaudio -y
 
+#pavucontrol
+sudo apt-get install pavucontrol -y
+
+
 #vlc
 sudo apt install vlc -y
 

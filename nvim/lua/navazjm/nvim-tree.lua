@@ -41,6 +41,9 @@ nvim_tree.setup({
             error = "",
         },
     },
+    filters = {
+        dotfiles = false,
+    },
     update_focused_file = {
         enable = true,
         update_cwd = true,
@@ -48,7 +51,7 @@ nvim_tree.setup({
     },
     git = {
         enable = true,
-        ignore = true,
+        ignore = false,
         timeout = 500,
     },
     view = {

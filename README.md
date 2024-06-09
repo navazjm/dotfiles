@@ -3,7 +3,8 @@
 
 ## Tools
 
-* AwesomeWM => [AwesomeWM](./awesome/rc.lua)
+* MacOS Window Manager => [Yabai](./.yabairc)
+* MacOS Hotkey Daemon => [SKHD](./.skhdrc)
 * Terminal Emulator => [Alacritty](./alacritty/alacritty.yml)
 * Text Editor => [Neovim](./nvim/init.lua)
 * Prompt => [Starship](./starship.toml)

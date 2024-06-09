@@ -1,7 +1,5 @@
-PATH=$PATH:~/.cargo/bin
-PATH=$PATH:/usr/local/go/bin
-
-# export QT_QPA_PLATFORMTHEME="qt5ct"
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=$PATH:~/.cargo/bin
 
 # zsh specific
 HYPHEN_INSENSITIVE="true"
@@ -10,13 +8,14 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(
   git
   sudo
-  zsh-autosuggestions
   copypath
   copyfile
   copybuffer
 )
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 #shell prompt
 eval "$(starship init zsh)"

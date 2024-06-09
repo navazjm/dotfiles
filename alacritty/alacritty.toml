@@ -50,19 +50,19 @@ text = "0xe0def4"
 TERM = "xterm-256color"
 
 [font]
-size = 11.0
+size = 14.0
 
 [font.bold]
-family = "SauceCodePro NFM"
+family = "AnonymicePro Nerd Font Mono"
 
 [font.bold_italic]
-family = "SauceCodePro NFM"
+family = "AnonymicePro Nerd Font Mono"
 
 [font.italic]
-family = "SauceCodePro NFM"
+family = "AnonymicePro Nerd Font Mono"
 
 [font.normal]
-family = "SauceCodePro NFM"
+family = "AnonymicePro Nerd Font Mono"
 
 [scrolling]
 history = 10000

@@ -56,8 +56,9 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- nvim tree --
-keymap("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", opts)
+-- Oil --
+keymap("n", "<leader>e", "<CMD>Oil<CR>", opts)
+vim.keymap.set("n", "<space>ee", require("oil").toggle_float)
 
 -- git --
 keymap("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<cr>", opts)
@@ -77,11 +78,11 @@ keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", opts)
 vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
 vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>/", function()
-	-- You can pass additional configuration to telescope to change theme, layout, etc.
-	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+        winblend = 10,
+        previewer = false,
+    }))
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
 vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })

@@ -47,7 +47,6 @@ return packer.startup(function(use)
     use("windwp/nvim-autopairs")  -- Autopairs, integrates with both cmp and treesitter
     use("numToStr/Comment.nvim")  -- Easily comment stuff
     use("kyazdani42/nvim-web-devicons")
-    use("kyazdani42/nvim-tree.lua")
     use("moll/vim-bbye")
     use("nvim-lualine/lualine.nvim")
     use("lukas-reineke/indent-blankline.nvim")
@@ -56,6 +55,26 @@ return packer.startup(function(use)
 
     -- Colorschemes
     use 'Mofiqul/vscode.nvim'
+
+    use({
+        "stevearc/oil.nvim",
+        config = function()
+            require("oil").setup {
+                columns = { "icon" },
+                keymaps = {
+                    ["<C-h>"] = false,
+                    ["<C-l>"] = false,
+                    ["<C-k>"] = false,
+                    ["<C-j>"] = false,
+                    ["<M-h>"] = "actions.select_split",
+                },
+                view_options = {
+                    show_hidden = true,
+                },
+            }
+        end,
+
+    })
 
     -- cmp plugins
     use("hrsh7th/nvim-cmp")         -- The completion plugin

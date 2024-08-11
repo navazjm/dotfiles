@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1716656478/share/lua/5.1/?.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1716656478/share/lua/5.1/?/init.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1716656478/lib/luarocks/rocks-5.1/?.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1716656478/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1716656478/lib/lua/5.1/?.so"
+local package_path_str = "/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1720049189/share/lua/5.1/?.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1720049189/share/lua/5.1/?/init.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1720049189/lib/luarocks/rocks-5.1/?.lua;/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1720049189/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/michaelnavarro/.cache/nvim/packer_hererocks/2.1.1720049189/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -149,11 +149,6 @@ _G.packer_plugins = {
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
-  ["nightfox.nvim"] = {
-    loaded = true,
-    path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
-    url = "https://github.com/EdenEast/nightfox.nvim"
-  },
   ["nlsp-settings.nvim"] = {
     loaded = true,
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nlsp-settings.nvim",
@@ -179,11 +174,6 @@ _G.packer_plugins = {
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-tree.lua"] = {
-    loaded = true,
-    path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
-    url = "https://github.com/kyazdani42/nvim-tree.lua"
-  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -199,6 +189,12 @@ _G.packer_plugins = {
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
+  ["oil.nvim"] = {
+    config = { "\27LJ\2\nà\1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\17view_options\1\0\1\16show_hidden\2\fkeymaps\1\0\5\n<C-l>\1\n<C-h>\1\n<M-h>\25actions.select_split\n<C-j>\1\n<C-k>\1\fcolumns\1\0\3\fcolumns\0\fkeymaps\0\17view_options\0\1\2\0\0\ticon\nsetup\boil\frequire\0" },
+    loaded = true,
+    path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/oil.nvim",
+    url = "https://github.com/stevearc/oil.nvim"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -213,11 +209,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
-  },
-  ["rose-pine"] = {
-    loaded = true,
-    path = "/Users/michaelnavarro/.local/share/nvim/site/pack/packer/start/rose-pine",
-    url = "https://github.com/rose-pine/neovim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -247,6 +238,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: oil.nvim
+time([[Config for oil.nvim]], true)
+try_loadstring("\27LJ\2\nà\1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\17view_options\1\0\1\16show_hidden\2\fkeymaps\1\0\5\n<C-l>\1\n<C-h>\1\n<M-h>\25actions.select_split\n<C-j>\1\n<C-k>\1\fcolumns\1\0\3\fcolumns\0\fkeymaps\0\17view_options\0\1\2\0\0\ticon\nsetup\boil\frequire\0", "config", "oil.nvim")
+time([[Config for oil.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

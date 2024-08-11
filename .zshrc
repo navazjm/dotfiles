@@ -1,5 +1,6 @@
 export PATH=/opt/homebrew/bin:$PATH
 export PATH=$PATH:~/.cargo/bin
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # zsh specific
 HYPHEN_INSENSITIVE="true"
@@ -20,9 +21,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #shell prompt
 eval "$(starship init zsh)"
 
-# needed for neovim lspconfig clangd
-export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
- 
 #mcfly
 # export MCFLY_DISABLE_MENU=TRUE
 # export MCFLY_LIGHT=TRUE
@@ -49,8 +47,13 @@ alias gcm="git commit -m"
 alias gcam="git commit -am"
 alias gp="git push"
 alias gpl="git pull"
+alias gplr="git pull --rebase"
 alias gf="git fetch"
 alias gd="git diff"
+alias gm="git merge"
+alias gmnff="git merge --no-ff"
+alias gr="git rebase"
+alias gst="git stash"
 
 alias cl="clear"
 alias ..="cd .."

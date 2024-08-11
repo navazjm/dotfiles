@@ -25,19 +25,19 @@ style = { shape = "Block", blinking = "On" }
 TERM = "xterm-256color"
 
 [font]
-size = 16.0
+size = 14.0
 
 [font.bold]
-family = "AnonymicePro Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
 
 [font.bold_italic]
-family = "AnonymicePro Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
 
 [font.italic]
-family = "AnonymicePro Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
 
 [font.normal]
-family = "AnonymicePro Nerd Font Mono"
+family = "JetBrainsMono Nerd Font Mono"
 
 [scrolling]
 history = 10000

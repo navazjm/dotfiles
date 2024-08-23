@@ -55,6 +55,7 @@ return packer.startup(function(use)
 
     -- Colorschemes
     use 'Mofiqul/vscode.nvim'
+    use "rebelot/kanagawa.nvim"
 
     use({
         "stevearc/oil.nvim",

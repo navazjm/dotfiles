@@ -1,6 +1,7 @@
-export PATH=/opt/homebrew/bin:$PATH
+export PATH=$PATH:/opt/homebrew/bin
 export PATH=$PATH:~/.cargo/bin
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export PATH=$PATH:/opt/homebrew/opt/postgresql@15/bin
+# export PATH=$PATH:/Users/michaelnavarro/repos/tloc/build/tloc
 
 # zsh specific
 HYPHEN_INSENSITIVE="true"

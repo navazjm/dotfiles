@@ -21,15 +21,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #shell prompt
 eval "$(starship init zsh)"
 
-#mcfly
-# export MCFLY_DISABLE_MENU=TRUE
-# export MCFLY_LIGHT=TRUE
-# export MCFLY_KEY_SCHEME=vim
-# export MCFLY_RESULTS_SORT=LAST_RUN
-# export MCFLY_RESULTS=25
-# export MCFLY_FUZZY=5
-# source <(mcfly init zsh)
-
 #nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -26,6 +26,7 @@ null_ls.setup({
                 buffer = bufnr,
                 callback = function()
                     vim.lsp.buf.format({ bufnr = bufnr })
+                    vim.diagnostic.enable()
                 end,
             })
         end

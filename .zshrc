@@ -49,5 +49,10 @@ alias gst="git stash"
 alias cl="clear"
 alias ..="cd .."
 
-alias n="nvim"
-alias t="tmux"
+alias .c="cd ~/.config"
+alias .d="cd ~/.config/dotfiles"
+alias nk="nvim ~/.config/kitty/kitty.conf"
+alias nn="nvim ~/.config/nvim/init.lua"
+alias nt="nvim ~/.tmux.conf"
+
+

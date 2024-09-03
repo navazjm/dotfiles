@@ -1,6 +1,7 @@
-export PATH=$PATH:/opt/homebrew/bin
+export PATH=/opt/homebrew/bin:$PATH
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:/opt/homebrew/opt/postgresql@15/bin
+export PATH=$PATH:/Applications/Docker.app/Contents/Resources/bin
 
 # zsh specific
 HYPHEN_INSENSITIVE="true"

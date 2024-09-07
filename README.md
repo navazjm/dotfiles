@@ -10,3 +10,6 @@
 * Prompt => [Starship](./starship.toml)
 * Multiplexer => [Tmux](./.tmux.conf)
 
+## Todo
+
+- [ ] nvim: migrate packer to lazy or pckr

@@ -56,6 +56,9 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
+-- Toggle spell checker __
+keymap("n", "<leader>sc", ":setlocal spell!<CR>", opts)
+
 -- Oil --
 keymap("n", "<leader>e", "<CMD>Oil<CR>", opts)
 vim.keymap.set("n", "<space>ee", require("oil").toggle_float)

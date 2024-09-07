@@ -35,7 +35,8 @@ local options = {
     sidescrolloff = 8,
     guifont = "monospace:h17",               -- the font used in graphical neovim applications
     laststatus = 3,
-    colorcolumn = "80"
+    colorcolumn = "80",
+    spelllang = "en_us",
 }
 
 vim.opt.shortmess:append("c")
@@ -54,3 +55,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
     pattern = '*',
 })
+
+-- spell checker -> highlight misspelt words red --
+vim.api.nvim_set_hl(0, "SpellBad", { bg = "red", fg = "white", underline = false })

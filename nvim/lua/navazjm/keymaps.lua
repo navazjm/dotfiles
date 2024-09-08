@@ -33,11 +33,10 @@ keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Tab switch buffer
 keymap("n", "<TAB>", ":bnext<CR>", opts)
-keymap("n", "<S_TAB>", ":bprevious<CR>", opts)
+keymap("n", "<S-TAB>", ":bprevious<CR>", opts)
 
 -- Insert --
--- Press jk fast to enter
-keymap("i", "<jj>", "<ESC>", opts)
+keymap("i", "<C-j>", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode

@@ -2,6 +2,7 @@ export PATH=/opt/homebrew/bin:$PATH
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:/opt/homebrew/opt/postgresql@15/bin
 export PATH=$PATH:/Applications/Docker.app/Contents/Resources/bin
+export PATH=$PATH:/opt/homebrew/opt/llvm/bin
 
 # zsh specific
 HYPHEN_INSENSITIVE="true"
@@ -19,8 +20,8 @@ source $ZSH/oh-my-zsh.sh
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-#shell prompt
-eval "$(starship init zsh)"
+export PS1='$(azile) '
+#export PS1='$(/Users/michaelnavarro/repos/azile/build/release/azile) '
 
 #nvm
 export NVM_DIR="$HOME/.nvm"
@@ -55,5 +56,4 @@ alias .d="cd ~/.config/dotfiles"
 alias nk="nvim ~/.config/kitty/kitty.conf"
 alias nn="nvim ~/.config/nvim/init.lua"
 alias nt="nvim ~/.tmux.conf"
-
-
+alias nz="nvim ~/.zshrc"

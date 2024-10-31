@@ -6,7 +6,7 @@
 * MacOS Hotkey Daemon => [SKHD](./.skhdrc)
 * Terminal Emulator => [Kitty](./kitty/kitty.conf)
 * Text Editor => [Neovim](./nvim/init.lua)
-* Shell => [ZSH](./.zshrc)
+* Shell => [fish](./fish/config.fish)
 * Prompt => [Starship](./starship.toml)
 * Multiplexer => [Tmux](./.tmux.conf)
 

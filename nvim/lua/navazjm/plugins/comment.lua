@@ -12,6 +12,7 @@ return {
             end
 
             return require("ts_context_commentstring.internal").calculate_commentstring({
+                --[[  ]]
                 key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
                 location = location,
             })

@@ -29,5 +29,3 @@ require("lazy").setup({ import = "navazjm/plugins" }, {
 
 require("navazjm.keymaps")
 require("navazjm.options")
-
--- require("navazjm.lsp")

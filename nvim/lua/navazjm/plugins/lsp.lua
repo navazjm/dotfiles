@@ -165,19 +165,22 @@ return {
                     local builtin = require("telescope.builtin")
 
                     vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-                    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
-                    vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = 0 })
+                    --[[ vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = 0 }) ]]
+                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
+                    vim.keymap.set("n", "gdv", ":vsplit | lua vim.lsp.buf.definition()<CR>", { buffer = 0 })
+                    vim.keymap.set("n", "gdd", vim.lsp.buf.declaration, { buffer = 0 })
                     vim.keymap.set("n", "gj", vim.lsp.buf.hover, { buffer = 0 })
-                    vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = 0 })
-                    vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+                    --[[ vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = 0 }) ]]
+                    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0 })
+                    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
                     vim.keymap.set("n", "gl", vim.diagnostic.open_float, { buffer = 0 })
-                    vim.api.nvim_buf_set_keymap(
-                        bufnr,
-                        "n",
-                        "gl",
-                        '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>',
-                        { noremap = true, silent = true }
-                    )
+                    --[[ vim.api.nvim_buf_set_keymap( ]]
+                    --[[     bufnr, ]]
+                    --[[     "n", ]]
+                    --[[     "gl", ]]
+                    --[[     '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', ]]
+                    --[[     { noremap = true, silent = true } ]]
+                    --[[ ) ]]
 
                     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
                     vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
@@ -207,7 +210,25 @@ return {
             conform.setup({
                 formatters_by_ft = {
                     lua = { "stylua" },
+                    c = { "clang_format" },
+                    cpp = { "clang_format" },
                 },
+                formatters = {
+                    clang_format = {
+                        prepend_args = { "--style=file", "--fallback-style=LLVM" },
+                    },
+                },
+                format_on_save = function(bufnr)
+                    -- Disable "format_on_save lsp_fallback" for languages that don't
+                    -- have a well standardized coding style. You can add additional
+                    -- languages here or re-enable it for the disabled ones.
+                    --[[ local disable_filetypes = { c = true, cpp = true } ]]
+                    local disable_filetypes = {}
+                    return {
+                        timeout_ms = 500,
+                        lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+                    }
+                end,
             })
 
             conform.formatters.injected = {
@@ -219,25 +240,8 @@ return {
                 },
             }
 
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                callback = function(args)
-                    -- local filename = vim.fn.expand "%:p"
-
-                    local extension = vim.fn.expand("%:e")
-                    if extension == "mlx" then
-                        return
-                    end
-
-                    require("conform").format({
-                        bufnr = args.buf,
-                        lsp_fallback = true,
-                        quiet = true,
-                    })
-                end,
-            })
-
             require("lsp_lines").setup()
-            vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+            vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
 
             -- toggle virtual lines
             vim.keymap.set("", "<leader>l", function()

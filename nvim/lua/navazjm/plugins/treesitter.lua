@@ -3,6 +3,8 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         opts = {
+            ensure_installed = "maintained",
+            auto_install = true,
             sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
             autopairs = {
                 enable = true,

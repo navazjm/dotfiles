@@ -1,0 +1,10 @@
+# This is Git's per-user configuration file.
+[user]
+	name = navazjm
+	email = michaelnavs@gmail.com
+[core]
+	editor = nvim
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    pager = cat # fixed issue with zsh using full terminal height to display commands like git branch, git stash list, etc.
+[init]
+	defaultBranch = main

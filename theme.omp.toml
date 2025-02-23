@@ -1,0 +1,142 @@
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+final_space = true
+version = 3
+
+[var]
+Username = ""
+
+[palette]
+cross = "#ACB0BE"
+closer = "green"
+user = "blue"
+dir = "yellow"
+git = "magenta"
+
+[[blocks]]
+alignment = "left"
+type = "prompt"
+
+    [[blocks.segments]]
+    style = "plain"
+    foreground = "p:cross"
+    template = "󰥓 "
+    type = "text"
+
+    [[blocks.segments]]
+    foreground = "p:user"
+    style = "plain"
+    template = "{{ if eq .UserName \"michaelnavarro\" }}MN{{ else }}{{ .UserName }}{{ end }}@{{ .HostName }} "
+    type = "session"
+
+    [[blocks.segments]]
+    foreground = "p:dir"
+    style = "plain"
+    template="{{if .Segments.Git.Ref}}{{.Segments.Git.RepoName}}{{.Path | replace .Segments.Git.Dir \"\"}}{{else}}{{.Path}}{{end}} "
+    type = "path"
+
+        [blocks.segments.properties]
+        style = "full"
+
+    [[blocks.segments]]
+    foreground = "p:git"
+    template = "{{ .HEAD }} "
+    style = "plain"
+    type = "git"
+
+        [blocks.segments.properties]
+        branch_icon = " "
+        cherry_pick_icon = " "
+        commit_icon = " "
+        fetch_status = false
+        fetch_upstream_icon = false
+        merge_icon = " "
+        no_commits_icon = " "
+        rebase_icon = " "
+        revert_icon = " "
+        tag_icon = " "
+
+## Project related information 
+
+[[blocks]]
+alignment = "right"
+type = "prompt"
+
+    [[blocks.segments]]
+    foreground = "red"
+    style = "plain"
+    template = "| root "
+    type = "root"
+
+    [[blocks.segments]]
+    type = "react"
+    style = "powerline"
+    foreground = "blue"
+    template = "|  {{ .Full }} "
+
+    [[blocks.segments]]
+    type = "npm"
+    style = "powerline"
+    foreground = "red"
+    template = "|  {{ .Full }} "
+
+    [[blocks.segments]]
+    type = "node"
+    style = "powerline"
+    foreground = "green"
+    template = "|  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+
+    [[blocks.segments]]
+    type = "python"
+    style = "powerline"
+    foreground = "yellow"
+    template = "|  {{ .Venv }} "
+        [blocks.segments.properties]
+        display_mode = "context"
+        fetch_virtual_env = true
+
+    [[blocks.segments]]
+    type = "go"
+    style = "powerline"
+    foreground = "blue"
+    template = "|  {{ .Full }} "
+
+    [[blocks.segments]]
+    type = "docker"
+    style = "powerline"
+    foreground = "blue"
+    template = "|  {{ .Context }} "
+
+    [[blocks.segments]]
+    type = "lua"
+    style = "powerline"
+    foreground = "blue"
+    template = "|  {{ .Full }} "
+
+    [[blocks.segments]]
+    type = "rust"
+    style = "powerline"
+    foreground = "red"
+    template = "|  {{ .Full }} "
+
+    [[blocks.segments]]
+    type = "cmake"
+    style = "powerline"
+    foreground = "yellow"
+    template = "|  {{ .Full }} "
+
+[[blocks]]
+alignment = "left"
+type = "prompt"
+newline = true
+
+    [[blocks.segments]]
+    style = "plain"
+    foreground = "p:closer"
+    template = "\u279c"
+    type = "text"
+
+[transient_prompt]
+style = "plain"
+foreground = "p:closer"
+template = "\u279c "
+type = "text"

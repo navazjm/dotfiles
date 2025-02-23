@@ -26,15 +26,19 @@ local mode = {
     end,
 }
 
+local filename = {
+    "filename",
+    path = 4,
+}
+
 local filetype = {
     "filetype",
-    icons_enabled = true,
-    icon = nil,
+    colored = false,
+    icon_only = true,
 }
 
 local branch = {
     "branch",
-    icons_enabled = true,
     icon = "",
 }
 
@@ -69,13 +73,16 @@ return {
                 section_separators = { left = "", right = "" },
                 disabled_filetypes = {},
                 always_divide_middle = true,
+                always_show_tabline = false,
+                globalstatus = true,
             },
             sections = {
-                lualine_a = { branch, diagnostics },
-                lualine_b = { mode },
-                lualine_c = {},
-                -- lualine_x = { "encoding", "fileformat", "filetype" },
-                lualine_x = { diff, spaces, "encoding", filetype },
+                -- weird spacing issue with filetype, going to ignore for now
+                --[[ lualine_a = { filetype, filename, diagnostics }, ]]
+                lualine_a = { filename, diagnostics },
+                lualine_b = { branch, diff },
+                lualine_c = { mode },
+                lualine_x = { spaces, "encoding" },
                 lualine_y = { location },
                 lualine_z = { progress },
             },
@@ -88,7 +95,70 @@ return {
                 lualine_z = {},
             },
             tabline = {},
+            winbar = {
+                lualine_c = {
+                    function()
+                        local navic = require("nvim-navic")
+                        return navic.is_available() and navic.get_location() or ""
+                    end,
+                },
+            },
+            inactive_winbar = {
+                lualine_c = { "filename" },
+            },
             extensions = {},
         },
+    },
+
+    -- Simple winbar/statusline plugin that shows your current code context (breadcrumbs)
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = "neovim/nvim-lspconfig",
+        config = function()
+            require("nvim-navic").setup({
+                icons = {
+                    File = "󰈙 ",
+                    Module = " ",
+                    Namespace = "󰌗 ",
+                    Package = " ",
+                    Class = "󰌗 ",
+                    Method = "󰆧 ",
+                    Property = " ",
+                    Field = " ",
+                    Constructor = " ",
+                    Enum = "󰕘",
+                    Interface = "󰕘",
+                    Function = "󰊕 ",
+                    Variable = "󰆧 ",
+                    Constant = "󰏿 ",
+                    String = "󰀬 ",
+                    Number = "󰎠 ",
+                    Boolean = "◩ ",
+                    Array = "󰅪 ",
+                    Object = "󰅩 ",
+                    Key = "󰌋 ",
+                    Null = "󰟢 ",
+                    EnumMember = " ",
+                    Struct = "󰌗 ",
+                    Event = " ",
+                    Operator = "󰆕 ",
+                    TypeParameter = "󰊄 ",
+                },
+                lsp = {
+                    auto_attach = false,
+                    preference = nil,
+                },
+                highlight = false,
+                separator = " > ",
+                depth_limit = 0,
+                depth_limit_indicator = "..",
+                safe_output = true,
+                lazy_update_context = false,
+                click = false,
+                format_text = function(text)
+                    return text
+                end,
+            })
+        end,
     },
 }

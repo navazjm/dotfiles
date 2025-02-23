@@ -130,7 +130,6 @@ return {
             local ensure_installed = {
                 "stylua",
                 "lua_ls",
-                "delve",
                 -- "tailwind-language-server",
             }
 
@@ -156,6 +155,11 @@ return {
                 callback = function(args)
                     local bufnr = args.buf
                     local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
+
+                    -- Attach nvim-navic if the server supports document symbols
+                    if client.server_capabilities.documentSymbolProvider then
+                        require("nvim-navic").attach(client, bufnr)
+                    end
 
                     local settings = servers[client.name]
                     if type(settings) ~= "table" then

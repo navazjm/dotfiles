@@ -1,7 +1,7 @@
 # color theme
 [general]
-# import = ["./themes/gruvbox-material.toml"]
-import = ["./themes/kanagawa-dragon.toml"]
+import = ["./themes/gruvbox-material.toml"]
+# import = ["./themes/kanagawa-dragon.toml"]
 # import = ["./themes/tokyo-night-enhanced.toml"]
 
 [cursor.style]

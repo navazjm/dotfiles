@@ -34,6 +34,8 @@ export NVM_DIR="$HOME/.nvm"
 #fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+## Aliases
+
 #replace ls with eza
 alias ls="eza -lahF --icons --classify"
 alias lsr="ls -RT"
@@ -58,9 +60,9 @@ alias gst="git stash"
 alias cl="clear"
 alias ..="cd .."
 
-alias con="cd ~/.config"
-export DOTFILES="~/.config/dotfiles"
-alias dot="cd $DOTFILES"
+alias cfg="cd $HOME/.config"
+export DOTFILES="$HOME/.config/dotfiles"
+alias cdot="cd $DOTFILES"
 alias vi="nvim"
 alias nd="vi $DOTFILES"
 alias nn="vi $DOTFILES/nvim/init.lua"

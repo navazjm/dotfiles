@@ -31,6 +31,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+#fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 #replace ls with eza
 alias ls="eza -lahF --icons --classify"
 alias lsr="ls -RT"
@@ -65,3 +68,41 @@ alias nt="vi $DOTFILES/.tmux.conf"
 alias nz="vi $DOTFILES/.zshrc"
 
 alias ac="$HOME/repos/auto-commit/auto-commit.sh"
+
+# Search for a running process and kill it
+alias proc="ps aux | fzf | awk '{print $2}' | xargs kill"
+
+# Use fzf to choose a session or create a new one
+tm() {
+    if [ -n "$TMUX" ]; then
+      echo "ERROR: Already inside a tmux session."
+      return 1
+    fi
+
+    # List all tmux sessions
+    sessions=$(tmux ls 2>/dev/null)
+
+    # TODO: add key binding to rename existing session
+
+    # get existing tmux session name, fall back to user query input
+    session=$(echo "$sessions" | cut -d: -f1 | \
+        fzf --prompt="tmux: " --height=40% --reverse --border \
+            --print-query \
+            --bind 'ctrl-x:execute-silent(tmux kill-session -t {} && echo Killed: {})+reload(tmux ls 2>/dev/null | cut -d: -f1)' \
+        | tail -n 1)
+
+    if [[ -z "$session" ]]; then
+        return
+    fi
+
+    if tmux has-session -t "$session" 2>/dev/null; then
+        # Attach to the selected session
+        echo tmux a -t "$session"
+        tmux a -t "$session"
+    else
+        # Create a new session with the typed name
+        echo tmux new-session -s "$session"
+        tmux new-session -s "$session"
+    fi
+}
+

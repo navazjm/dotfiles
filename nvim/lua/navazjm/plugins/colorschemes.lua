@@ -21,4 +21,12 @@ return {
         priority = 1000,
         opts = {},
     },
+    {
+        "navazjm/plastic.nvim",
+        dependencies = { "rktjmp/lush.nvim" },
+        name = "plastic",
+        lazy = false,
+        priority = 1000,
+        config = function() end,
+    },
 }

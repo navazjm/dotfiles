@@ -56,6 +56,7 @@ alias gm="git merge"
 alias gmnff="git merge --no-ff"
 alias gr="git rebase"
 alias gst="git stash"
+alias gch="git checkout"
 
 alias cl="clear"
 alias ..="cd .."

@@ -51,8 +51,11 @@ return {
                                 version = "LuaJIT",
                             },
                             diagnostics = {
+                                enable = true,
                                 -- Get the language server to recognize the `vim` global
-                                globals = { "vim" },
+                                globals = { "vim", "use" },
+                                -- Use `luacheck` for diagnostics
+                                checkThirdParty = false, -- Turn off third-party checks (optional)
                             },
                             workspace = {
                                 -- Make the server aware of Neovim runtime files
@@ -146,6 +149,11 @@ return {
 
                 lspconfig[name].setup(config)
             end
+
+            -- Create LspLuacheck command for running luacheck manually
+            vim.api.nvim_create_user_command("LspLuacheck", function()
+                vim.cmd("!luacheck %")
+            end, { desc = "Run luacheck manually on current Lua file" })
 
             local disable_semantic_tokens = {
                 lua = true,

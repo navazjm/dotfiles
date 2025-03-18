@@ -29,12 +29,14 @@ local mode = {
 local filename = {
     "filename",
     path = 4,
+    padding = { left = 0 },
 }
 
 local filetype = {
     "filetype",
     colored = false,
     icon_only = true,
+    padding = { right = 0 },
 }
 
 local branch = {
@@ -77,9 +79,7 @@ return {
                 globalstatus = true,
             },
             sections = {
-                -- weird spacing issue with filetype, going to ignore for now
-                --[[ lualine_a = { filetype, filename, diagnostics }, ]]
-                lualine_a = { filename, diagnostics },
+                lualine_a = { filetype, filename, diagnostics },
                 lualine_b = { branch, diff },
                 lualine_c = { mode },
                 lualine_x = { spaces, "encoding" },
@@ -103,9 +103,7 @@ return {
                     end,
                 },
             },
-            inactive_winbar = {
-                lualine_c = { "filename" },
-            },
+            inactive_winbar = {},
             extensions = {},
         },
     },

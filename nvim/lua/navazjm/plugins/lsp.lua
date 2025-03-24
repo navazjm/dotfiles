@@ -198,6 +198,9 @@ return {
                     vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { buffer = 0 })
                     vim.keymap.set("n", "<space>wd", builtin.lsp_document_symbols, { buffer = 0 })
 
+                    vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next)
+                    vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev)
+
                     local filetype = vim.bo[bufnr].filetype
                     if disable_semantic_tokens[filetype] then
                         client.server_capabilities.semanticTokensProvider = nil

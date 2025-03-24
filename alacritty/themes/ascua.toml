@@ -1,0 +1,32 @@
+# Copyright (c) 2025 Ascua.nvim
+# MIT license, see LICENSE for more details.
+
+[colors]
+primary.foreground = "#DCDCCC"
+primary.background = "#282828"
+
+normal.black = "#949494" # more of a gray than black
+normal.blue = "#8CD0D3"
+normal.cyan = "#8FAF9F" # more of a mint color
+normal.green = "#7F9F7F"
+normal.magenta = "#BB88BB"
+normal.red = "#CC9393"
+normal.white = "#DCDCCC"
+normal.yellow = "#DFC47D"
+
+# duplicate values from [colors.normal]
+bright.black = "#949494"
+bright.blue = "#8CD0D3"
+bright.cyan = "#CEDF99"
+bright.green = "#7F9F7F"
+bright.magenta = "#BB88BB"
+bright.red = "#CC9393"
+bright.white = "#DCDCCC"
+bright.yellow = "#DFC47D"
+
+cursor.background = "#8FAF9F" # normal.cyan (mint color)
+
+selection.text = "#282828" # primary.background
+selection.background = "#CC9393" # normal.red
+
+

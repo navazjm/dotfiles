@@ -1,8 +1,9 @@
 # color theme
 [general]
+import = ["./themes/ascua.toml"]
 # import = ["./themes/gruvbox-material.toml"]
 # import = ["./themes/kanagawa-dragon.toml"]
-import = ["./themes/plastic.toml"]
+# import = ["./themes/plastic.toml"]
 # import = ["./themes/tokyo-night-enhanced.toml"]
 # import = ["./themes/vscode.toml"]
 

@@ -29,9 +29,3 @@ require("lazy").setup({ import = "navazjm/plugins" }, {
 
 require("navazjm.keymaps")
 require("navazjm.options")
-
---[[ vim.cmd.colorscheme("gruvbox-material") ]]
---[[ vim.cmd.colorscheme("kanagawa-dragon") ]]
-vim.cmd.colorscheme("plastic")
---[[ vim.cmd.colorscheme("tokyonight-night") ]]
---[[ vim.cmd.colorscheme("vscode") ]]

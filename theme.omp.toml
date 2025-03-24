@@ -6,10 +6,10 @@ Username = ""
 
 [palette]
 cross = "white"
-user = "yellow"
-dir = "cyan"
-git = "magenta"
-closer = "magenta"
+user = "cyan"
+dir = "yellow"
+git = "red"
+closer = "cyan"
 
 [[blocks]]
 alignment = "left"

@@ -99,7 +99,9 @@ return {
                 lualine_c = {
                     function()
                         local navic = require("nvim-navic")
-                        return navic.is_available() and navic.get_location() or ""
+                        local loc = navic.get_location()
+                        -- If there is no context, show a placeholder
+                        return loc ~= "" and loc or " "
                     end,
                 },
             },

@@ -1,8 +1,4 @@
 local opts = { noremap = true, silent = true }
-
-local term_opts = { silent = true }
-
--- Shorten function name
 local keymap = vim.api.nvim_set_keymap
 
 -------------------------------------------------------------------------------
@@ -18,19 +14,15 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
--- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+-- Resize with Alt + hjkl
+keymap("n", "<M-h>", ":vertical resize -2<CR>", opts)
+keymap("n", "<M-j>", ":resize +2<CR>", opts)
+keymap("n", "<M-k>", ":resize -2<CR>", opts)
+keymap("n", "<M-l>", ":vertical resize +2<CR>", opts)
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
-
--- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Toggle spell checker __
 keymap("n", "<leader>sc", ":setlocal spell!<CR>", opts)
@@ -76,20 +68,34 @@ vim.keymap.set("n", "<leader>sm", builtin.man_pages, { desc = "[S]earch [M]an Pa
 -- Keymap to open the manpage of the highlighted word in a vertical split
 local function get_man_page()
     local word = vim.fn.expand("<cword>")
-    local handle = io.popen("man " .. word .. " 2>/dev/null")
+    if word == "" then
+        return
+    end
+
+    local handle = io.popen("man " .. word .. " | col -b 2>/dev/null")
     if not handle then
         vim.notify("Failed to check manual entry for '" .. word .. "'", vim.log.levels.ERROR)
         return
     end
+
     local result = handle:read("*a")
+    handle:close()
 
     -- Check if the man page exists
-    if result == nil or result == "" then
+    if not result or result:match("^%s*$") then
         vim.notify("No manual entry for '" .. word .. "'", vim.log.levels.ERROR)
-    else
-        vim.cmd("vsp | terminal man " .. word)
+        return
     end
-    handle:close()
+
+    -- Open a temp buffer and set it to read-only with the man page content
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(result, "\n"))
+    vim.bo[buf].modifiable = false
+    vim.bo[buf].buftype = "nofile"
+
+    -- Open the buffer in a vertical split
+    vim.cmd("vsp")
+    vim.api.nvim_win_set_buf(0, buf)
 end
 vim.keymap.set("n", "<leader>m", get_man_page, opts)
 
@@ -97,7 +103,7 @@ vim.keymap.set("n", "<leader>m", get_man_page, opts)
 -- Insert --
 -------------------------------------------------------------------------------
 
-keymap("i", "<C-j>", "<ESC>", opts)
+keymap("i", "<C-f>", "<ESC>", opts)
 
 -------------------------------------------------------------------------------
 -- Visual --
@@ -108,8 +114,8 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
+keymap("v", "<M-j>", ":m .+1<CR>==", opts)
+keymap("v", "<M-k>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts)
 
 -------------------------------------------------------------------------------
@@ -119,5 +125,11 @@ keymap("v", "p", '"_dP', opts)
 -- Move text up and down
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "<M-j>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<M-k>", ":move '<-2<CR>gv-gv", opts)
+
+-------------------------------------------------------------------------------
+-- Terminal Block --
+-------------------------------------------------------------------------------
+
+keymap("t", "<leader>t", "<C-\\><C-n><C-w>h", opts)

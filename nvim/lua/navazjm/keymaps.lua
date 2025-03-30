@@ -5,7 +5,13 @@ local term_opts = { silent = true }
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
 
+-------------------------------------------------------------------------------
 -- Normal --
+-------------------------------------------------------------------------------
+
+-- keymap to close buffers
+keymap("n", "<leader>q", ":bd!<CR>", opts)
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -25,30 +31,6 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 -- Move text up and down
 keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
-
--- Tab switch buffer
-keymap("n", "<TAB>", ":bnext<CR>", opts)
-keymap("n", "<S-TAB>", ":bprevious<CR>", opts)
-
--- Insert --
-keymap("i", "<C-j>", "<ESC>", opts)
-
--- Visual --
--- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
-
--- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
-
--- Visual Block --
--- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Toggle spell checker __
 keymap("n", "<leader>sc", ":setlocal spell!<CR>", opts)
@@ -90,3 +72,52 @@ vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]re
 vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 vim.keymap.set("n", "<leader>sm", builtin.man_pages, { desc = "[S]earch [M]an Pages" })
+
+-- Keymap to open the manpage of the highlighted word in a vertical split
+local function get_man_page()
+    local word = vim.fn.expand("<cword>")
+    local handle = io.popen("man " .. word .. " 2>/dev/null")
+    if not handle then
+        vim.notify("Failed to check manual entry for '" .. word .. "'", vim.log.levels.ERROR)
+        return
+    end
+    local result = handle:read("*a")
+
+    -- Check if the man page exists
+    if result == nil or result == "" then
+        vim.notify("No manual entry for '" .. word .. "'", vim.log.levels.ERROR)
+    else
+        vim.cmd("vsp | terminal man " .. word)
+    end
+    handle:close()
+end
+vim.keymap.set("n", "<leader>m", get_man_page, opts)
+
+-------------------------------------------------------------------------------
+-- Insert --
+-------------------------------------------------------------------------------
+
+keymap("i", "<C-j>", "<ESC>", opts)
+
+-------------------------------------------------------------------------------
+-- Visual --
+-------------------------------------------------------------------------------
+
+-- Stay in indent mode
+keymap("v", "<", "<gv", opts)
+keymap("v", ">", ">gv", opts)
+
+-- Move text up and down
+keymap("v", "<A-j>", ":m .+1<CR>==", opts)
+keymap("v", "<A-k>", ":m .-2<CR>==", opts)
+keymap("v", "p", '"_dP', opts)
+
+-------------------------------------------------------------------------------
+-- Visual Block --
+-------------------------------------------------------------------------------
+
+-- Move text up and down
+keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)

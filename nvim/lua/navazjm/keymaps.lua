@@ -65,8 +65,8 @@ vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iag
 vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 vim.keymap.set("n", "<leader>sm", builtin.man_pages, { desc = "[S]earch [M]an Pages" })
 
--- Keymap to open the manpage of the highlighted word in a vertical split
-local function get_man_page()
+-- Keymap to open the manpage of the highlighted word in a vertical or horizontal split
+local function get_man_page(split_cmd)
     local word = vim.fn.expand("<cword>")
     if word == "" then
         return
@@ -94,10 +94,19 @@ local function get_man_page()
     vim.bo[buf].buftype = "nofile"
 
     -- Open the buffer in a vertical split
-    vim.cmd("vsp")
+    vim.cmd(split_cmd)
     vim.api.nvim_win_set_buf(0, buf)
 end
-vim.keymap.set("n", "<leader>m", get_man_page, opts)
+
+local function get_man_page_vsp()
+    get_man_page("vsp")
+end
+local function get_man_page_sp()
+    get_man_page("sp")
+end
+
+vim.keymap.set("n", "<leader>m", get_man_page_sp, opts)
+vim.keymap.set("n", "<leader>mv", get_man_page_vsp, opts)
 
 -------------------------------------------------------------------------------
 -- Insert --

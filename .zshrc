@@ -36,6 +36,8 @@ export NVM_DIR="$HOME/.nvm"
 
 ## Aliases
 
+alias lg="lazygit"
+
 #replace ls with eza
 alias ls="eza -lahF --icons --classify"
 alias lsr="ls -RT"

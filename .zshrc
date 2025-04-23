@@ -25,13 +25,6 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(azile init zsh)"
 fi
-export AZILE_DIR_COLOR="bright yellow"
-export AZILE_DIR_GIT_SEP="::"
-export AZILE_DIR_GIT_SEP_COLOR="white"
-export AZILE_GIT_COLOR="bright red"
-export AZILE_GIT_STATUS_SYMBOL="()"
-export AZILE_PROMPT_END_SYMBOL=">>"
-export AZILE_PROMPT_END_SYMBOL_COLOR="blue"
 
 #nvm
 export NVM_DIR="$HOME/.nvm"

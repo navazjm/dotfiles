@@ -112,3 +112,26 @@ tm() {
     fi
 }
 
+# crun
+# ----
+# Recursively searches upward from the current directory to locate the root
+# of a C project by finding a `scripts/run.sh` file. Once located, it executes
+# `scripts/run.sh` from the project root, forwarding any command-line arguments.
+#
+# This function is useful for running a consistent entry script from anywhere
+# within your C project's directory tree.
+#
+# Usage:
+#   crun                     # runs scripts/run.sh
+#   crun --arg1 --arg2 ...   # passes arguments to scripts/run.sh
+crun() {
+    local dir="$PWD"
+    while [[ "$dir" != "/" ]]; do
+        if [[ -f "$dir/scripts/run.sh" ]]; then
+            (cd "$dir" && ./scripts/run.sh "$@")
+            return
+        fi
+        dir=$(dirname "$dir")
+    done
+    echo "Could not find scripts/run.sh"
+}

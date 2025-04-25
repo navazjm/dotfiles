@@ -135,3 +135,6 @@ crun() {
     done
     echo "Could not find scripts/run.sh"
 }
+
+alias cr="crun"
+alias crb="crun --build"

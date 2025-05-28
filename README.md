@@ -10,7 +10,7 @@ To view or use the dotfiles for a specific OS, please switch to the appropriate 
 ## Available Branches
 
 - [`macos`](https://github.com/navazjm/dotfiles/tree/macos) – macOS-specific configurations
-- [`void-linux`](https://github.com/navazjm/dotfiles/tree/void-linux) – Void Linux-specific configurations
+- [`voidlinux`](https://github.com/navazjm/dotfiles/tree/voidlinux) – Void Linux-specific configurations
 
 ## Usage
 

@@ -1,15 +1,11 @@
-# Navazjm's Dotfiles
+# Dotfiles for MacOS
 
 ## Tools
 
 * MacOS Window Manager => [Yabai](./.yabairc)
 * MacOS Hotkey Daemon => [SKHD](./.skhdrc)
-* Terminal Emulator => [Kitty](./kitty/kitty.conf)
+* Terminal Emulator => [Alacritty](./alacritty/alacritty.toml)
 * Text Editor => [Neovim](./nvim/init.lua)
-* Shell => [fish](./fish/config.fish)
-* Prompt => [Starship](./starship.toml)
+* Shell => [Zsh](./.zshrc)
 * Multiplexer => [Tmux](./.tmux.conf)
 
-## Todo
-
-- [ ] nvim: migrate packer to lazy or pckr

@@ -1,15 +1,23 @@
-# Navazjm's Dotfiles
+# Dotfiles
 
-## Tools
+Welcome to my dotfiles repository!
 
-* MacOS Window Manager => [Yabai](./.yabairc)
-* MacOS Hotkey Daemon => [SKHD](./.skhdrc)
-* Terminal Emulator => [Kitty](./kitty/kitty.conf)
-* Text Editor => [Neovim](./nvim/init.lua)
-* Shell => [fish](./fish/config.fish)
-* Prompt => [Starship](./starship.toml)
-* Multiplexer => [Tmux](./.tmux.conf)
+This repository contains my personal configuration files, organized by operating system.  
+The main branch (`main`) only contains this README for reference.
 
-## Todo
+To view or use the dotfiles for a specific OS, please switch to the appropriate branch:
 
-- [ ] nvim: migrate packer to lazy or pckr
+## Available Branches
+
+- [`macos`](https://github.com/YOUR_USERNAME/dotfiles/tree/macos) – macOS-specific configurations
+- [`void-linux`](https://github.com/YOUR_USERNAME/dotfiles/tree/void-linux) – Void Linux-specific configurations
+
+## Usage
+
+```sh
+# Clone the repo and checkout the branch you want
+git clone https://github.com/YOUR_USERNAME/dotfiles.git
+cd dotfiles
+git checkout macos   # or void-linux, etc.
+```
+

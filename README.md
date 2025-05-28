@@ -17,7 +17,7 @@ Welcome to my macOS dotfiles branch! This setup is tailored for a productive and
 
 Looking for configs for a different OS?
 
-- 🐧 [VoidLinux](https://github.com/navazjm/dotfiles/tree/void-linux)
+- 🐧 [VoidLinux](https://github.com/navazjm/dotfiles/tree/voidlinux)
 - 📘 [Back to main](https://github.com/navazjm/dotfiles/tree/main)
 
 ---

@@ -9,15 +9,13 @@ To view or use the dotfiles for a specific OS, please switch to the appropriate 
 
 ## Available Branches
 
-- [`macos`](https://github.com/YOUR_USERNAME/dotfiles/tree/macos) – macOS-specific configurations
-- [`void-linux`](https://github.com/YOUR_USERNAME/dotfiles/tree/void-linux) – Void Linux-specific configurations
+- [`macos`](https://github.com/navazjm/dotfiles/tree/macos) – macOS-specific configurations
+- [`void-linux`](https://github.com/navazjm/dotfiles/tree/void-linux) – Void Linux-specific configurations
 
 ## Usage
 
 ```sh
-# Clone the repo and checkout the branch you want
-git clone https://github.com/YOUR_USERNAME/dotfiles.git
-cd dotfiles
-git checkout macos   # or void-linux, etc.
+# Clone and checkout directly into specific OS branch:
+git clone --branch <OS_BRANCH> https://github.com/navazjm/dotfiles.git --depth=1
 ```
 

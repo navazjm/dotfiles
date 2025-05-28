@@ -24,6 +24,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 
+local xresources = require("beautiful.xresources")
+xresources.set_dpi(96) -- Or 110, 120, etc., based on your screen
+
 -- }}}
 
 -- {{{ Error handling
@@ -88,14 +91,14 @@ awful.spawn.with_shell(
 
 local modkey = "Mod4"
 local altkey = "Mod1"
-local terminal = "alacritty"
+local terminal = "st"
 local vi_focus = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev = true -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
 local editor = os.getenv("EDITOR") or "nvim"
-local browser = "brave-browser"
+local browser = "firefox"
 local audio = "pavucontrol"
 local obs = "obs"
-local fileExp = "xdg-open ~"
+local fileExp = "pcmanfm ~"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }

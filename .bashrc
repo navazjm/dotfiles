@@ -1,29 +1,6 @@
-export PATH=/opt/homebrew/bin:$PATH
-export PATH=$PATH:~/.cargo/bin
-export PATH=$PATH:/opt/homebrew/opt/postgresql@15/bin
-export PATH=$PATH:/Applications/Docker.app/Contents/Resources/bin
-export PATH=$PATH:/opt/homebrew/opt/llvm/bin
-
-# zsh specific
-HYPHEN_INSENSITIVE="true"
-COMPLETION_WAITING_DOTS="true"
-HIST_STAMPS="mm/dd/yyyy"
-plugins=(
-    git
-    sudo
-    copypath
-    copyfile
-    copybuffer
-    zsh-vi-mode
-)
-export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 #Azile shell prompt
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(azile init zsh)"
+  eval "$(azile init bash)"
 fi
 
 #nvm
@@ -36,6 +13,7 @@ export NVM_DIR="$HOME/.nvm"
 
 ## Aliases
 
+alias sb="source ~/.bashrc"
 alias lg="lazygit"
 
 #replace ls with eza
@@ -64,16 +42,15 @@ alias grst="git restore"
 alias cl="clear"
 alias ..="cd .."
 
-alias cfg="cd $HOME/.config"
 export DOTFILES="$HOME/.config/dotfiles"
 alias cdot="cd $DOTFILES"
 alias vi="nvim"
+alias vb="vi $DOTFILES/.bashrc"
 alias vd="vi $DOTFILES"
 alias vn="vi $DOTFILES/nvim/init.lua"
 alias vt="vi $DOTFILES/.tmux.conf"
-alias vz="vi $DOTFILES/.zshrc"
 
-alias ac="$HOME/repos/auto-commit/auto-commit.sh"
+alias ac="$HOME/dev/auto-commit/auto-commit.sh"
 
 # Search for a running process and kill it
 alias proc="ps aux | fzf | awk '{print $2}' | xargs kill"

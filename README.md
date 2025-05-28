@@ -17,14 +17,14 @@ Welcome to my macOS dotfiles branch! This setup is tailored for a productive and
 
 Looking for configs for a different OS?
 
-- 🐧 [VoidLinux](https://github.com/YOUR_USERNAME/dotfiles/tree/void-linux)
-- 📘 [Back to main](https://github.com/YOUR_USERNAME/dotfiles/tree/main)
+- 🐧 [VoidLinux](https://github.com/navazjm/dotfiles/tree/void-linux)
+- 📘 [Back to main](https://github.com/navazjm/dotfiles/tree/main)
 
 ---
 
 > 💡 Tip: Clone with depth and checkout directly into this branch if you're setting up on macOS:
 
 ```bash
-git clone --branch macos https://github.com/YOUR_USERNAME/dotfiles.git --depth=1
+git clone --branch macos https://github.com/navazjm/dotfiles.git --depth=1
 ```
 

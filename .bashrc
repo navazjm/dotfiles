@@ -1,7 +1,5 @@
 #Azile shell prompt
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(azile init bash)"
-fi
+eval "$(azile init bash)"
 
 #nvm
 export NVM_DIR="$HOME/.nvm"
@@ -9,7 +7,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 
 ## Aliases
 

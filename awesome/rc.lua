@@ -196,12 +196,7 @@ local myawesomemenu = {
 	{ "Manual", string.format("%s -e man awesome", terminal) },
 	{ "Edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
 	{ "Restart", awesome.restart },
-	{
-		"Quit",
-		function()
-			awesome.quit()
-		end,
-	},
+	{ "Quit", function() awesome.quit() end, },
 }
 
 awful.util.mymainmenu = freedesktop.menu.build({
@@ -848,4 +843,22 @@ client.connect_signal("unfocus", function(c)
 end)
 
 awful.util.spawn("~/.config/awesome/autorun.sh")
--- }}}
+
+-- On initial launch, or restart if no instances are found, open st in tags 1 
+-- and firefox in tags 2.
+
+local function st_matcher(c)
+    return
+end
+
+if awesome.startup then
+    awful.spawn.single_instance("st", {
+        tag = screen.primary.tags[1],
+        class = "st-256color"
+    }, st_matcher, "autostart-st")
+
+    awful.spawn.single_instance("firefox", {
+        tag = screen.primary.tags[2],
+        class = "Firefox"
+    }, nil, "autostart-firefox")
+end

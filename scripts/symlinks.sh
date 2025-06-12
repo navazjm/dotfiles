@@ -16,6 +16,7 @@ link_file() {
     echo "Created symlink: $dest -> $source"
 }
 
+link_file "$HOME/.config/dotfiles/.asoundrc" "$HOME/.asoundrc"
 link_file "$HOME/.config/dotfiles/.xinitrc" "$HOME/.xinitrc"
 link_file "$HOME/.config/dotfiles/.bashrc" "$HOME/.bashrc"
 link_file "$HOME/.config/dotfiles/.bash_profile" "$HOME/.bash_profile"
@@ -23,3 +24,4 @@ link_file "$HOME/.config/dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$HOME/.config/dotfiles/.gitconfig" "$HOME/.gitconfig"
 link_file "$HOME/.config/dotfiles/nvim" "$HOME/.config/nvim" 
 link_file "$HOME/.config/dotfiles/awesome" "$HOME/.config/awesome" 
+link_file "$HOME/.config/dotfiles/spotify-player/app.toml" "$HOME/.config/spotify-player/app.toml" 

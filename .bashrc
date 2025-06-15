@@ -1,3 +1,5 @@
+export PATH=$HOME/.local/bin:$PATH
+
 #Azile shell prompt
 eval "$(azile init bash)"
 
@@ -109,3 +111,4 @@ EOF
 
 alias cbh="connect_bluetooth F8:4E:17:9C:F1:65"
 alias cbs="connect_bluetooth FC:A8:9A:6A:8F:23"
+

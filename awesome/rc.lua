@@ -99,6 +99,9 @@ local browser = "firefox"
 local audio = "pavucontrol"
 local obs = "obs"
 local fileExp = "pcmanfm ~"
+local steam = "steam"
+local vlc = "vlc"
+local discord = "Discord"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -298,7 +301,7 @@ globalkeys = mytable.join(
 	end, { description = "lock screen", group = "hotkeys" }),
 
 	-- Show help
-	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
+	awful.key({ altkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
 	-- Tag browsing
 	awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
@@ -417,7 +420,7 @@ globalkeys = mytable.join(
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+	awful.key({ modkey, "Control" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
 	awful.key({ modkey, altkey }, "l", function()
 		awful.tag.incmwfact(0.05)
 	end, { description = "increase master width factor", group = "layout" }),
@@ -544,19 +547,28 @@ globalkeys = mytable.join(
 	-- User programs
 	awful.key({ modkey }, "b", function()
 		awful.spawn(browser)
-	end, { description = "run browser", group = "launcher" }),
+	end, { description = "run Browser", group = "launcher" }),
 	awful.key({ modkey }, "a", function()
 		awful.spawn(audio)
-	end, { description = "run pavucontrol", group = "launcher" }),
-	awful.key({ modkey }, "o", function()
+	end, { description = "run Pavucontrol", group = "launcher" }),
+	awful.key({ modkey }, "r", function()
 		awful.spawn(obs)
-	end, { description = "run obs", group = "launcher" }),
+	end, { description = "run OBS", group = "launcher" }),
 	awful.key({ modkey }, "f", function()
 		awful.spawn.with_shell(fileExp)
-	end, { description = "run file explorer", group = "launcher" }),
+	end, { description = "run Pcmanfm", group = "launcher" }),
 	awful.key({ modkey }, "t", function()
 		awful.spawn(terminal)
-	end, { description = "run terminal", group = "launcher" }),
+	end, { description = "run Terminal", group = "launcher" }),
+	awful.key({ modkey }, "s", function()
+		awful.spawn(steam)
+	end, { description = "run Steam", group = "launcher" }),
+	awful.key({ modkey }, "v", function()
+		awful.spawn(vlc)
+	end, { description = "run VLC", group = "launcher" }),
+	awful.key({ modkey }, "d", function()
+		awful.spawn(discord)
+	end, { description = "run Discord", group = "launcher" }),
 
 	-- Default
 	--[[ Menubar

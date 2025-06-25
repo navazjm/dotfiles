@@ -1,0 +1,33 @@
+{
+	"version": 4,
+	"configurePresets": [
+		{
+			"name": "vl",
+			"displayName": "Void Linux Release",
+			"description": "Release build for Void Linux with browser docks support",
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/build/vl",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_INSTALL_PREFIX": "/usr",
+				"UNIX_STRUCTURE": "ON",
+				"ENABLE_AJA": "OFF",
+				"ENABLE_JACK":"OFF",
+				"ENABLE_NVENC": "OFF",
+				"ENABLE_BROWSER": "ON",
+				"QRCODEGENCPP_FORCE_INTERNAL":"ON",
+				"CEF_ROOT_DIR": "/home/navazjm/.config/dotfiles/obs/tmp/cef",
+				"OBS_COMPILE_DEPRECATION_AS_WARNING": true
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "vl",
+			"configurePreset": "vl",
+			"description": "Build OBS for Void Linux (Release)",
+			"jobs": 12
+		}
+	],
+	"testPresets": []
+}

@@ -151,10 +151,17 @@ setup() {
     esac
 }
 
+run() {
+    export PATH="$HOME/.local/bin:$PATH"
+    export LD_LIBRARY_PATH="$HOME/.local/lib64:$LD_LIBRARY_PATH"
+    exec "$LOCAL_BIN_DIR/obs"
+}
+
 # Show help
 help() {
-    echo "Usage: $0 [install|setup|uninstall|help]"
+    echo "Usage: $0 [install|run|setup|uninstall|help]"
     echo "  install     Installs/updates OBS Studio from source"
+    echo "  run         Runs OBS Studio with needed env vars"
     echo "  setup       Adds required paths to your shell config"
     echo "  uninstall   Removes OBS binaries and libraries installed by script"
     echo "  help        Displays usage instructions"
@@ -163,6 +170,7 @@ help() {
 # Main
 case "$1" in
     install|update) install "$@" ;;
+    run) run ;;
     setup) setup ;;
     uninstall) uninstall ;;
     help|-h|--help|usage|"") help ;;

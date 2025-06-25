@@ -97,7 +97,6 @@ local cycle_prev = true -- cycle with only the previously focused client or all 
 local editor = os.getenv("EDITOR") or "nvim"
 local browser = "firefox"
 local audio = "pavucontrol"
-local obs = "obs"
 local fileExp = "pcmanfm ~"
 local steam = "steam"
 local vlc = "vlc"
@@ -199,7 +198,12 @@ local myawesomemenu = {
 	{ "Manual", string.format("%s -e man awesome", terminal) },
 	{ "Edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
 	{ "Restart", awesome.restart },
-	{ "Quit", function() awesome.quit() end, },
+	{
+		"Quit",
+		function()
+			awesome.quit()
+		end,
+	},
 }
 
 awful.util.mymainmenu = freedesktop.menu.build({
@@ -552,7 +556,7 @@ globalkeys = mytable.join(
 		awful.spawn(audio)
 	end, { description = "run Pavucontrol", group = "launcher" }),
 	awful.key({ modkey }, "r", function()
-		awful.spawn(obs)
+		awful.spawn.with_shell("~/.config/dotfiles/obs/obs.sh run")
 	end, { description = "run OBS", group = "launcher" }),
 	awful.key({ modkey }, "f", function()
 		awful.spawn.with_shell(fileExp)
@@ -592,11 +596,11 @@ globalkeys = mytable.join(
         {description = "show rofi", group = "launcher"}),
     --]]
 	-- Prompt
-	awful.key({ modkey }, "r", function()
+	awful.key({ altkey }, "r", function()
 		awful.screen.focused().mypromptbox:run()
 	end, { description = "run prompt", group = "launcher" }),
 
-	awful.key({ modkey }, "x", function()
+	awful.key({ altkey }, "x", function()
 		awful.prompt.run({
 			prompt = "Run Lua code: ",
 			textbox = awful.screen.focused().mypromptbox.widget,
@@ -856,21 +860,21 @@ end)
 
 awful.util.spawn("~/.config/awesome/autorun.sh")
 
--- On initial launch, or restart if no instances are found, open st in tags 1 
+-- On initial launch, or restart if no instances are found, open st in tags 1
 -- and firefox in tags 2.
 
 local function st_matcher(c)
-    return
+	return
 end
 
 if awesome.startup then
-    awful.spawn.single_instance("st", {
-        tag = screen.primary.tags[1],
-        class = "st-256color"
-    }, st_matcher, "autostart-st")
+	awful.spawn.single_instance("st", {
+		tag = screen.primary.tags[1],
+		class = "st-256color",
+	}, st_matcher, "autostart-st")
 
-    awful.spawn.single_instance("firefox", {
-        tag = screen.primary.tags[2],
-        class = "Firefox"
-    }, nil, "autostart-firefox")
+	awful.spawn.single_instance("firefox", {
+		tag = screen.primary.tags[2],
+		class = "Firefox",
+	}, nil, "autostart-firefox")
 end

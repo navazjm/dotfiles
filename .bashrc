@@ -1,4 +1,5 @@
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/.local/lib64:$LD_LIBRARY_PATH" # needed for OBS
 
 #Azile shell prompt
 eval "$(azile init bash)"
@@ -112,3 +113,5 @@ EOF
 alias cbh="connect_bluetooth F8:4E:17:9C:F1:65"
 alias cbs="connect_bluetooth FC:A8:9A:6A:8F:23"
 
+# avoid naming conflicts with obs and obs.sh
+alias sbo="$HOME/.config/dotfiles/obs/obs.sh"

@@ -101,6 +101,7 @@ local fileExp = "pcmanfm ~"
 local steam = "steam"
 local vlc = "vlc"
 local discord = "Discord"
+local obs = "obs"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -556,7 +557,7 @@ globalkeys = mytable.join(
 		awful.spawn(audio)
 	end, { description = "run Pavucontrol", group = "launcher" }),
 	awful.key({ modkey }, "r", function()
-		awful.spawn.with_shell("~/.config/dotfiles/obs/obs.sh run")
+		awful.spawn(obs)
 	end, { description = "run OBS", group = "launcher" }),
 	awful.key({ modkey }, "f", function()
 		awful.spawn.with_shell(fileExp)

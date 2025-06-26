@@ -65,17 +65,14 @@ alias proc="ps aux | fzf | awk '{print $2}' | xargs kill"
 
 # Use fzf to choose a session or create a new one
 tm() {
-    if [ -n "$TMUX" ]; then
-      echo "ERROR: Already inside a tmux session."
-      return 1
-    fi
-
-    # List all tmux sessions
+    # Get list of all tmux sessions
     sessions=$(tmux ls 2>/dev/null)
 
     # TODO: add key binding to rename existing session
 
+    # display list of sessions with fzf
     # get existing tmux session name, fall back to user query input
+    # ctrl-x to delete existing session
     session=$(echo "$sessions" | cut -d: -f1 | \
         fzf --prompt="tmux: " --height=40% --reverse --border \
             --print-query \
@@ -83,17 +80,33 @@ tm() {
         | tail -n 1)
 
     if [[ -z "$session" ]]; then
-        return
+        return 1
     fi
 
     if tmux has-session -t "$session" 2>/dev/null; then
-        # Attach to the selected session
-        echo tmux a -t "$session"
-        tmux a -t "$session"
-    else
-        # Create a new session with the typed name
-        echo tmux new-session -s "$session"
-        tmux new-session -s "$session"
+        # session already exists, attach to it...
+        if [ -n "$TMUX" ]; then
+            # already in tmux, so use switch-client command
+            echo "tmux switch-client -t $session"
+            tmux switch-client -t "$session"
+        else
+            # not in tmux, attach normally
+            echo "tmux attach -t $session"
+            tmux attach -t "$session"
+        fi
+    else # session does not exist, create it...
+        if [ -n "$TMUX" ]; then
+            # Already in tmux session. Create new session without attaching to it.
+            # Once created, switch to the new session
+            echo "tmux new-session -d -s $session"
+            tmux new-session -d -s "$session"
+            echo "tmux switch-client -t $session"
+            tmux switch-client -t "$session"
+        else
+            # Create session and attach immediately since not in tmux 
+            echo "tmux new-session -s $session"
+            tmux new-session -s "$session"
+        fi
     fi
 }
 

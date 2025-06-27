@@ -17,9 +17,9 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 local theme = {}
 theme.dir = os.getenv("HOME") .. "/.config/awesome/theme"
 theme.wallpaper = theme.dir .. "/wall.jpg"
-theme.font = "Inter 9"
+theme.font = "Inter monospace 9"
 theme.fg_normal = "#DDDDFF"
-theme.fg_focus = "#EA6F81"
+theme.fg_focus = "#8CD0D3"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#1A1A1A"
 theme.bg_focus = "#313131"
@@ -57,6 +57,7 @@ theme.widget_mem = theme.dir .. "/icons/mem.png"
 theme.widget_cpu = theme.dir .. "/icons/cpu.png"
 theme.widget_temp = theme.dir .. "/icons/temp.png"
 theme.widget_net = theme.dir .. "/icons/net.png"
+theme.widget_net_wired = theme.dir .. "/icons/net_wired.png"
 theme.widget_hdd = theme.dir .. "/icons/hdd.png"
 theme.widget_music = theme.dir .. "/icons/note.png"
 theme.widget_music_on = theme.dir .. "/icons/note_on.png"
@@ -68,7 +69,7 @@ theme.widget_mail = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on = theme.dir .. "/icons/mail_on.png"
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = true
-theme.useless_gap = dpi(0)
+theme.useless_gap = dpi(3)
 theme.titlebar_close_button_focus = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal = theme.dir .. "/icons/titlebar/close_normal.png"
 theme.titlebar_ontop_button_focus_active = theme.dir .. "/icons/titlebar/ontop_focus_active.png"
@@ -94,86 +95,25 @@ local separators = lain.util.separators
 local keyboardlayout = awful.widget.keyboardlayout:new()
 
 -- Textclock
-local clockicon = wibox.widget.imagebox(theme.widget_clock)
-local clock = awful.widget.watch("date +'%a %d %b %R'", 60, function(widget, stdout)
+local clock = awful.widget.watch("date +'%Y-%m-%d %H:%M:%S'", 1, function(widget, stdout)
 	widget:set_markup(" " .. markup.font(theme.font, stdout))
 end)
-
--- Calendar
-theme.cal = lain.widget.cal({
-	attach_to = { clock },
-	notification_preset = {
-		font = "Terminus 10",
-		fg = theme.fg_normal,
-		bg = theme.bg_normal,
-	},
-})
-
--- Mail IMAP check
-local mailicon = wibox.widget.imagebox(theme.widget_mail)
---[[ commented because it needs to be set before use
-mailicon:buttons(my_table.join(awful.button({ }, 1, function () awful.spawn(mail) end)))
-theme.mail = lain.widget.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        if mailcount > 0 then
-            widget:set_markup(markup.font(theme.font, " " .. mailcount .. " "))
-            mailicon:set_image(theme.widget_mail_on)
-        else
-            widget:set_text("")
-            mailicon:set_image(theme.widget_mail)
-        end
-    end
-})
---]]
-
--- MPD
-local musicplr = awful.util.terminal .. " -title Music -e ncmpcpp"
-local mpdicon = wibox.widget.imagebox(theme.widget_music)
-mpdicon:buttons(my_table.join(
-	awful.button({ "Mod4" }, 1, function()
-		awful.spawn(musicplr)
-	end),
-	awful.button({}, 1, function()
-		os.execute("mpc prev")
-		theme.mpd.update()
-	end),
-	awful.button({}, 2, function()
-		os.execute("mpc toggle")
-		theme.mpd.update()
-	end),
-	awful.button({}, 3, function()
-		os.execute("mpc next")
-		theme.mpd.update()
-	end)
-))
-theme.mpd = lain.widget.mpd({
-	settings = function()
-		if mpd_now.state == "play" then
-			artist = " " .. mpd_now.artist .. " "
-			title = mpd_now.title .. " "
-			mpdicon:set_image(theme.widget_music_on)
-		elseif mpd_now.state == "pause" then
-			artist = " mpd "
-			title = "paused "
-		else
-			artist = ""
-			title = ""
-			mpdicon:set_image(theme.widget_music)
-		end
-
-		widget:set_markup(markup.font(theme.font, markup("#EA6F81", artist) .. title))
-	end,
-})
 
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
 local mem = lain.widget.mem({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, " " .. mem_now.used .. "MB "))
+		local used = tonumber(mem_now.used)
+		local display_text
+
+		if used >= 1024 then
+			-- Convert MB to GB (1024 MB = 1 GB)
+			display_text = string.format("%.1fGB", used / 1024)
+		else
+			display_text = used .. "MB"
+		end
+
+		widget:set_markup(markup.font(theme.font, " " .. display_text .. " "))
 	end,
 })
 
@@ -181,48 +121,50 @@ local mem = lain.widget.mem({
 local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local cpu = lain.widget.cpu({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
+		widget:set_markup(markup.font(theme.font, " " .. string.format("%02d", cpu_now.usage) .. "% "))
 	end,
 })
 
 -- Coretemp
 local tempicon = wibox.widget.imagebox(theme.widget_temp)
 local temp = lain.widget.temp({
+	tempfile = "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input",
 	settings = function()
-		widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
+		local temp_num = tonumber(coretemp_now)
+		local color = "#DDDDFF" -- default white
+
+		if temp_num then
+			if temp_num > 80 then
+				color = "#ff0000" -- red for hot
+			elseif temp_num > 70 then
+				color = "#ffaa00" -- orange for warm
+			elseif temp_num > 60 then
+				color = "#ffff00" -- yellow for moderate
+			end
+		end
+
+		widget:set_markup(markup.font(theme.font, " <span color='" .. color .. "'>" .. coretemp_now .. "°C</span> "))
 	end,
 })
 
 -- / fs
 local fsicon = wibox.widget.imagebox(theme.widget_hdd)
---[[ commented because it needs Gio/Glib >= 2.54
 theme.fs = lain.widget.fs({
-    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Terminus 10" },
-    settings = function()
-        widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
-    end
-})
---]]
-
--- Battery
-local baticon = wibox.widget.imagebox(theme.widget_battery)
-local bat = lain.widget.bat({
+	notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = theme.font },
 	settings = function()
-		if bat_now.status and bat_now.status ~= "N/A" then
-			if bat_now.ac_status == 1 then
-				baticon:set_image(theme.widget_ac)
-			elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
-				baticon:set_image(theme.widget_battery_empty)
-			elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
-				baticon:set_image(theme.widget_battery_low)
-			else
-				baticon:set_image(theme.widget_battery)
-			end
-			widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
-		else
-			widget:set_markup(markup.font(theme.font, " AC "))
-			baticon:set_image(theme.widget_ac)
+		local used_percentage = fs_now["/"].percentage
+		local color = "#DDDDFF"
+
+		-- Color coding based on disk usage
+		if used_percentage >= 90 then
+			color = "#FF0000" -- red
+		elseif used_percentage >= 80 then
+			color = "#FFAA00" -- orange
+		elseif used_percentage >= 70 then
+			color = "#FFFF00" -- yellow
 		end
+
+		widget:set_markup(markup.font(theme.font, " <span color='" .. color .. "'>" .. used_percentage .. "%</span> "))
 	end,
 })
 
@@ -240,7 +182,7 @@ theme.volume = lain.widget.alsa({
 			volicon:set_image(theme.widget_vol)
 		end
 
-		widget:set_markup(markup.font(theme.font, " " .. volume_now.level .. "% "))
+		widget:set_markup(markup.font(theme.font, " " .. string.format("%02d", volume_now.level) .. "% "))
 	end,
 })
 theme.volume.widget:buttons(awful.util.table.join(
@@ -258,15 +200,46 @@ theme.volume.widget:buttons(awful.util.table.join(
 local neticon = wibox.widget.imagebox(theme.widget_net)
 local net = lain.widget.net({
 	settings = function()
-		widget:set_markup(
-			markup.font(
-				theme.font,
-				markup("#7AC82E", " " .. string.format("%06.1f", net_now.received))
-					.. " "
-					.. markup("#46A8C3", " " .. string.format("%06.1f", net_now.sent) .. " ")
-			)
-		)
+		-- Check active interface name
+		awful.spawn.easy_async_with_shell("ip route show default | head -1 | awk '{print $5}'", function(stdout)
+			local interface = stdout:gsub("\n", "")
+			if interface:match("^wl") or interface:match("^wlan") then
+				neticon:set_image(theme.widget_net) -- WiFi icon
+				widget:set_markup(markup.font(theme.font, ""))
+			elseif interface:match("^e") then -- eth, enp, eno
+				neticon:set_image(theme.widget_net_wired) -- Wired icon
+				widget:set_markup(markup.font(theme.font, ""))
+			else
+				neticon:set_image(nil) -- Clear the icon
+				widget:set_markup(markup.font(theme.font, " <span color='#FF0000'>❌ Offline</span> "))
+			end
+		end)
 	end,
+})
+-- Function to format bytes with appropriate units
+local function format_speed(kb_per_sec)
+	if kb_per_sec >= 1024 * 1024 then
+		return string.format("%.1f GB/s", kb_per_sec / (1024 * 1024))
+	elseif kb_per_sec >= 1024 then
+		return string.format("%.1f MB/s", kb_per_sec / 1024)
+	else
+		return string.format("%.1f KB/s", kb_per_sec)
+	end
+end
+
+-- Tooltip showing network speeds
+local net_tooltip = awful.tooltip({
+	objects = { neticon },
+	timer_function = function()
+		local tooltip_text = "Up: "
+			.. format_speed(tonumber(net_now.sent))
+			.. " | Down: "
+			.. format_speed(tonumber(net_now.received))
+		return tooltip_text
+	end,
+	fg = theme.fg_normal,
+	bg = theme.bg_normal,
+	font = theme.font,
 })
 
 -- Separators
@@ -334,32 +307,23 @@ function theme.at_screen_connect(s)
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			wibox.widget.systray(),
-			keyboardlayout,
-			spr,
 			arrl_ld,
-			wibox.container.background(mpdicon, theme.bg_focus),
-			wibox.container.background(theme.mpd.widget, theme.bg_focus),
+			wibox.container.background(keyboardlayout, theme.bg_focus),
 			arrl_dl,
 			volicon,
 			theme.volume.widget,
 			arrl_ld,
-			wibox.container.background(mailicon, theme.bg_focus),
-			--wibox.container.background(theme.mail.widget, theme.bg_focus),
+			wibox.container.background(memicon, theme.bg_focus),
+			wibox.container.background(mem.widget, theme.bg_focus),
 			arrl_dl,
-			memicon,
-			mem.widget,
+			cpuicon,
+			cpu.widget,
 			arrl_ld,
-			wibox.container.background(cpuicon, theme.bg_focus),
-			wibox.container.background(cpu.widget, theme.bg_focus),
+			wibox.container.background(tempicon, theme.bg_focus),
+			wibox.container.background(temp.widget, theme.bg_focus),
 			arrl_dl,
-			tempicon,
-			temp.widget,
-			arrl_ld,
-			wibox.container.background(fsicon, theme.bg_focus),
-			--wibox.container.background(theme.fs.widget, theme.bg_focus),
-			arrl_dl,
-			baticon,
-			bat.widget,
+			fsicon,
+			theme.fs.widget,
 			arrl_ld,
 			wibox.container.background(neticon, theme.bg_focus),
 			wibox.container.background(net.widget, theme.bg_focus),

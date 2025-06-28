@@ -91,7 +91,6 @@ awful.spawn.with_shell(
 
 local modkey = "Mod4"
 local altkey = "Mod1"
-local terminal = "st"
 local vi_focus = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev = true -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
 local editor = os.getenv("EDITOR") or "nvim"
@@ -102,6 +101,8 @@ local steam = "steam"
 local vlc = "vlc"
 local discord = "Discord"
 local obs = "obs"
+local terminal = "st"
+local st_command = terminal .. " -c st-256color"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -421,9 +422,6 @@ globalkeys = mytable.join(
 	end, { description = "delete tag", group = "tag" }),
 
 	-- Standard program
-	awful.key({ modkey }, "Return", function()
-		awful.spawn(terminal)
-	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
 	awful.key({ modkey, "Control" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
 	awful.key({ modkey, altkey }, "l", function()
@@ -563,7 +561,7 @@ globalkeys = mytable.join(
 		awful.spawn.with_shell(fileExp)
 	end, { description = "run Pcmanfm", group = "launcher" }),
 	awful.key({ modkey }, "t", function()
-		awful.spawn(terminal)
+		awful.spawn(st_command)
 	end, { description = "run Terminal", group = "launcher" }),
 	awful.key({ modkey }, "s", function()
 		awful.spawn(steam)
@@ -865,11 +863,11 @@ awful.util.spawn("~/.config/awesome/autorun.sh")
 -- and firefox in tags 2.
 
 local function st_matcher(c)
-	return
+	return c.class == "st-256color"
 end
 
 if awesome.startup then
-	awful.spawn.single_instance("st", {
+	awful.spawn.single_instance(st_command, {
 		tag = screen.primary.tags[1],
 		class = "st-256color",
 	}, st_matcher, "autostart-st")

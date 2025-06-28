@@ -736,6 +736,11 @@ awful.rules.rules = {
 		},
 	},
 
+	{ rule = { class = "st-256color" }, properties = { opacity = 0.9 } },
+	{ rule = { class = "Firefox" }, properties = { opacity = 0.9 } },
+	{ rule = { class = "discord" }, properties = { opacity = 0.9 } },
+	{ rule = { class = "Pcmanfm" }, properties = { opacity = 0.9 } },
+
 	-- Floating clients.
 	{
 		rule_any = {

@@ -102,6 +102,7 @@ end)
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
 local mem = lain.widget.mem({
+	timeout = 5, -- Update every 5 seconds instead of default 2
 	settings = function()
 		local used = tonumber(mem_now.used)
 		local display_text
@@ -113,7 +114,7 @@ local mem = lain.widget.mem({
 			display_text = used .. "MB"
 		end
 
-		widget:set_markup(markup.font(theme.font, " " .. display_text .. " "))
+		widget:set_markup(markup.font(theme.font, string.format(" %6s ", display_text)))
 	end,
 })
 

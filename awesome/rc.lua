@@ -25,7 +25,10 @@ require("awful.hotkeys_popup.keys")
 local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local xresources = require("beautiful.xresources")
-xresources.set_dpi(96) -- Or 110, 120, etc., based on your screen
+xresources.set_dpi(90) -- Or 110, 120, etc., based on your screen
+
+-- Start picom with backend
+awful.spawn.with_shell("picom --backend xrender")
 
 -- }}}
 
@@ -94,7 +97,8 @@ local altkey = "Mod1"
 local vi_focus = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev = true -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
 local editor = os.getenv("EDITOR") or "nvim"
-local browser = "firefox"
+local browser = "firefox-dev"
+local browser_personal = "firefox"
 local audio = "pavucontrol"
 local fileExp = "pcmanfm ~"
 local steam = "steam"
@@ -297,7 +301,7 @@ globalkeys = mytable.join(
 	end, { description = "destroy all notifications", group = "hotkeys" }),
 	-- Take a screenshot
 	-- https://github.com/lcpz/dots/blob/master/bin/screenshot
-	awful.key({ altkey }, "p", function()
+	awful.key({ altkey, "Shift" }, "p", function()
 		os.execute("screenshot")
 	end, { description = "take a screenshot", group = "hotkeys" }),
 
@@ -307,7 +311,7 @@ globalkeys = mytable.join(
 	end, { description = "lock screen", group = "hotkeys" }),
 
 	-- Show help
-	awful.key({ altkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
+	awful.key({ altkey, "Shift" }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
 	-- Tag browsing
 	awful.key({ modkey }, "Left", awful.tag.viewprev, { description = "view previous", group = "tag" }),
@@ -387,7 +391,7 @@ globalkeys = mytable.join(
 	end, { description = "cycle with previous/go back", group = "client" }),
 
 	-- Show/hide wibox
-	awful.key({ modkey, "Shift" }, "b", function()
+	awful.key({ modkey, "Shift" }, "w", function()
 		for s in screen do
 			s.mywibox.visible = not s.mywibox.visible
 			if s.mybottomwibox then
@@ -463,17 +467,17 @@ globalkeys = mytable.join(
 	end, { description = "dropdown application", group = "launcher" }),
 
 	-- Widgets popups
-	awful.key({ altkey }, "c", function()
+	awful.key({ altkey, "Shift" }, "c", function()
 		if beautiful.cal then
 			beautiful.cal.show(7)
 		end
 	end, { description = "show calendar", group = "widgets" }),
-	awful.key({ altkey }, "h", function()
+	awful.key({ altkey, "Shift" }, "h", function()
 		if beautiful.fs then
 			beautiful.fs.show(7)
 		end
 	end, { description = "show filesystem", group = "widgets" }),
-	awful.key({ altkey }, "w", function()
+	awful.key({ altkey, "Shift" }, "w", function()
 		if beautiful.weather then
 			beautiful.weather.show(7)
 		end
@@ -496,7 +500,7 @@ globalkeys = mytable.join(
 		os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
 		beautiful.volume.update()
 	end, { description = "volume down", group = "hotkeys" }),
-	awful.key({ altkey }, "m", function()
+	awful.key({ altkey, "Shift" }, "m", function()
 		os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
 		beautiful.volume.update()
 	end, { description = "toggle mute", group = "hotkeys" }),
@@ -526,7 +530,7 @@ globalkeys = mytable.join(
 		os.execute("mpc next")
 		beautiful.mpd.update()
 	end, { description = "mpc next", group = "widgets" }),
-	awful.key({ altkey }, "0", function()
+	awful.key({ altkey, "Shift" }, "0", function()
 		local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
 		if beautiful.mpd.timer.started then
 			beautiful.mpd.timer:stop()
@@ -551,6 +555,9 @@ globalkeys = mytable.join(
 	awful.key({ modkey }, "b", function()
 		awful.spawn(browser)
 	end, { description = "run Browser", group = "launcher" }),
+	awful.key({ modkey, "Shift" }, "b", function()
+		awful.spawn(browser_personal)
+	end, { description = "run Personal Browser", group = "launcher" }),
 	awful.key({ modkey }, "a", function()
 		awful.spawn(audio)
 	end, { description = "run Pavucontrol", group = "launcher" }),
@@ -595,11 +602,11 @@ globalkeys = mytable.join(
         {description = "show rofi", group = "launcher"}),
     --]]
 	-- Prompt
-	awful.key({ altkey }, "r", function()
+	awful.key({ altkey, "Shift" }, "r", function()
 		awful.screen.focused().mypromptbox:run()
 	end, { description = "run prompt", group = "launcher" }),
 
-	awful.key({ altkey }, "x", function()
+	awful.key({ altkey, "Shift" }, "x", function()
 		awful.prompt.run({
 			prompt = "Run Lua code: ",
 			textbox = awful.screen.focused().mypromptbox.widget,
@@ -611,7 +618,7 @@ globalkeys = mytable.join(
 )
 
 clientkeys = mytable.join(
-	awful.key({ altkey, "Shift" }, "m", lain.util.magnify_client, { description = "magnify client", group = "client" }),
+	awful.key({ modkey, altkey }, "m", lain.util.magnify_client, { description = "magnify client", group = "client" }),
 	awful.key({ modkey }, "f", function(c)
 		c.fullscreen = not c.fullscreen
 		c:raise()
@@ -737,10 +744,11 @@ awful.rules.rules = {
 	},
 
 	-- transparent windows
-	--[[ { rule = { class = "st-256color" }, properties = { opacity = 0.9 } }, ]]
-	--[[ { rule = { class = "Firefox" }, properties = { opacity = 0.9 } }, ]]
-	--[[ { rule = { class = "discord" }, properties = { opacity = 0.9 } }, ]]
-	--[[ { rule = { class = "Pcmanfm" }, properties = { opacity = 0.9 } }, ]]
+	{ rule = { class = "st-256color" }, properties = { opacity = 0.95 } },
+	--[[ { rule = { class = "Firefox" }, properties = { opacity = 0.95 } }, ]]
+	{ rule = { class = "firefox-dev" }, properties = { opacity = 0.95 } },
+	{ rule = { class = "discord" }, properties = { opacity = 0.95 } },
+	{ rule = { class = "Pcmanfm" }, properties = { opacity = 0.95 } },
 
 	-- Floating clients.
 	{
@@ -878,8 +886,8 @@ if awesome.startup then
 		class = "st-256color",
 	}, st_matcher, "autostart-st")
 
-	awful.spawn.single_instance("firefox", {
+	awful.spawn.single_instance(browser, {
 		tag = screen.primary.tags[2],
-		class = "Firefox",
+		class = browser,
 	}, nil, "autostart-firefox")
 end

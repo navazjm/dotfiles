@@ -47,7 +47,6 @@ alias gst="git stash"
 alias gch="git checkout"
 alias grst="git restore"
 
-alias cl="clear"
 alias ..="cd .."
 
 export DOTFILES="$HOME/.config/dotfiles"

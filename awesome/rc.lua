@@ -25,7 +25,7 @@ require("awful.hotkeys_popup.keys")
 local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local xresources = require("beautiful.xresources")
-xresources.set_dpi(90) -- Or 110, 120, etc., based on your screen
+xresources.set_dpi(96) -- Or 110, 120, etc., based on your screen
 
 local opacity_val = 0.95
 

@@ -107,6 +107,7 @@ local steam = "steam"
 local vlc = "vlc"
 local discord = "Discord"
 local obs = "obs"
+local kdenlive = "kdenlive"
 local terminal = "st"
 local st_command = terminal .. " -c st-256color"
 
@@ -581,6 +582,9 @@ globalkeys = mytable.join(
 	awful.key({ modkey }, "d", function()
 		awful.spawn(discord)
 	end, { description = "run Discord", group = "launcher" }),
+	awful.key({ modkey }, "e", function()
+		awful.spawn.with_shell(kdenlive)
+	end, { description = "run Kdenlive", group = "launcher" }),
 
 	-- Default
 	--[[ Menubar

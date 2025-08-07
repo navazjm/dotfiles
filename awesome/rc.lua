@@ -27,6 +27,8 @@ local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 local xresources = require("beautiful.xresources")
 xresources.set_dpi(90) -- Or 110, 120, etc., based on your screen
 
+local opacity_val = 0.95
+
 -- Start picom with backend
 awful.spawn.with_shell("picom --backend xrender")
 
@@ -744,11 +746,11 @@ awful.rules.rules = {
 	},
 
 	-- transparent windows
-	{ rule = { class = "st-256color" }, properties = { opacity = 0.95 } },
-	--[[ { rule = { class = "Firefox" }, properties = { opacity = 0.95 } }, ]]
-	{ rule = { class = "firefox-dev" }, properties = { opacity = 0.95 } },
-	{ rule = { class = "discord" }, properties = { opacity = 0.95 } },
-	{ rule = { class = "Pcmanfm" }, properties = { opacity = 0.95 } },
+	{ rule = { class = "st-256color" }, properties = { opacity = opacity_val } },
+	--[[ { rule = { class = "Firefox" }, properties = { opacity = opacity_val } }, ]]
+	{ rule = { class = "firefox-dev" }, properties = { opacity = opacity_val } },
+	{ rule = { class = "discord" }, properties = { opacity = opacity_val } },
+	{ rule = { class = "Pcmanfm" }, properties = { opacity = opacity_val } },
 
 	-- Floating clients.
 	{

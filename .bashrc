@@ -127,3 +127,56 @@ alias cbs="connect_bluetooth FC:A8:9A:6A:8F:23"
 
 # avoid naming conflicts with obs and obs.sh
 alias sbo="$HOME/.config/dotfiles/obs/obs.sh"
+
+generate-gif() {
+    # Check if correct number of arguments provided
+    if [ $# -ne 2 ]; then
+        echo "Usage: generate-gif <input vidoe> <output.gif>"
+        echo "Example: generate-gif demo.mp4 demo.gif"
+        return 1
+    fi
+
+    local input_file="$1"
+    local output_file="$2"
+    local palette_file="palette_tmp.png"
+
+    # Check if input file exists
+    if [ ! -f "$input_file" ]; then
+        echo "Error: Input file '$input_file' not found"
+        return 1
+    fi
+
+    # Check if input file is a video
+    if ! ffmpeg -i "$input_file" -t 1 -f null - 2>/dev/null; then
+        echo "Error: '$input_file' is not a valid video file"
+        return 1
+    fi
+
+    echo "Converting $input_file to $output_file..."
+
+    # Generate palette
+    echo "Step 1/2: Generating color palette..."
+    if ! ffmpeg -i "$input_file" -vf "fps=12,scale=640:-1:flags=lanczos,palettegen" "$palette_file" -y 2>/dev/null; then
+        echo "Error: Failed to generate palette"
+        return 1
+    fi
+
+    # Create GIF with palette
+    echo "Step 2/2: Creating optimized GIF..."
+    if ffmpeg -i "$input_file" -i "$palette_file" -filter_complex "fps=12,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" "$output_file" -y 2>/dev/null; then
+        echo "Success! Created $output_file"
+        
+        # Show file size
+        if command -v du >/dev/null 2>&1; then
+            echo "File size: $(du -h "$output_file" | cut -f1)"
+        fi
+    else
+        echo "Error: Failed to create GIF"
+        rm -f "$palette_file"
+        return 1
+    fi
+
+    # Clean up temporary palette file
+    rm -f "$palette_file"
+    return 0
+}

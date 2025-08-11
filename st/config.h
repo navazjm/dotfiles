@@ -188,7 +188,7 @@ static MouseShortcut mshortcuts[] = {
 
 static Shortcut shortcuts[] = {
     /* mask                 keysym          function        argument */
-    {ShiftMask, XK_dollar, zoomreset, {.f = 0}},
+    {ShiftMask, XK_Page_Up, zoomreset, {.f = 0}},
     {ShiftMask, XK_Up, zoom, {.f = -1}},
     {ShiftMask, XK_Down, zoom, {.f = +1}},
     {TERMMOD, XK_C, clipcopy, {.i = 0}},

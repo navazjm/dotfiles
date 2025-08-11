@@ -1,6 +1,10 @@
-# VoidLinux Dotfiles
+# Dotfiles
 
-Welcome to my VoidLinux dotfiles branch! This setup is focused on a lightweight, keyboard-driven workflow using minimalist tools.
+This setup is focused on a lightweight, keyboard-driven workflow using minimalist tools.
+
+## Machine Specs
+
+<img width="1920" height="1080" alt="2025-08-11-155323_1920x1080_scrot" src="https://github.com/user-attachments/assets/e2737342-f759-4233-9f61-333a49a2ca2e" />
 
 ## ⚙️ Tools & Configurations
 
@@ -11,18 +15,3 @@ Welcome to my VoidLinux dotfiles branch! This setup is focused on a lightweight,
 | 🖥️ Terminal        | [st (Simple Terminal)](https://st.suckless.org/)  | [`config.h`](./st/config.h)   |
 | 🐚 Shell           | [Bash](https://github.com/bminor/bash)            | [`.bashrc`](./.bashrc)        |
 | 🧱 Multiplexer     | [Tmux](https://github.com/tmux/tmux)              | [`.tmux.conf`](./.tmux.conf)  |
-
-## 🔀 Other OS Configurations
-
-Looking for configs for a different OS?
-
-- 🍎 [MacOS](https://github.com/navazjm/dotfiles/tree/macos)
-- 📘 [Back to main](https://github.com/navazjm/dotfiles/tree/main)
-
----
-
-> 💡 Tip: Clone with depth and checkout directly into this branch if you're setting up on VoidLinux:
-
-```bash
-git clone --branch voidlinux https://github.com/YOUR_USERNAME/dotfiles.git --depth=1
-```

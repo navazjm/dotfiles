@@ -63,12 +63,13 @@ vim.o.colorcolumn = "80"
 vim.o.spelllang = "en_us"
 vim.opt.list = true
 vim.opt.listchars = {
-    -- space = "·",     -- Show spaces as dots
-    tab = "→ ",         -- Show tabs as arrows
+    -- space = "·",     -- Show ALL spaces as dots
+    leadmultispace = "‧", -- Show leading spaces as dots
+    tab = "→ ", -- Show tabs as arrows
     -- eol = "↴",       -- Show end of line (optional)
-    trail = "•",        -- Show trailing spaces
-    extends = "⟩",      -- Show line extends beyond screen
-    precedes = "⟨",     -- Show line precedes screen
+    trail = "•", -- Show trailing spaces
+    extends = "⟩", -- Show line extends beyond screen
+    precedes = "⟨", -- Show line precedes screen
 }
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
@@ -231,7 +232,7 @@ require("gitsigns").setup({
 
 require("ibl").setup({
     indent = {
-        char = "┊", -- "│", "▎", "┊"
+        char = "⁞", -- "│", "▎", "┊", "", "⁞"
     },
     scope = {
         show_end = true,

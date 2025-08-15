@@ -502,6 +502,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Normal --
+keymap("n", "<leader>sn", "<CMD>source ~/.config/nvim/init.lua<CR>")
 
 -- write current buffer
 keymap("n", "<leader>w", "<CMD>w<CR>")

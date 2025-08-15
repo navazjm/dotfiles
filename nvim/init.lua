@@ -78,7 +78,7 @@ vim.cmd([[set iskeyword+=-]])
 -- highlight animation on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        vim.highlight.on_yank({ higroup = "Visual", timeout = 150 })
+        vim.highlight.on_yank({ higroup = "cursor", timeout = 150 })
     end,
     pattern = "*",
 })

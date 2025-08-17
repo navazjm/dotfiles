@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ~/.screenlayout/layout.sh &
 
 # Start tmux sessions if they don't already exist

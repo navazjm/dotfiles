@@ -25,7 +25,7 @@ require("awful.hotkeys_popup.keys")
 local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local xresources = require("beautiful.xresources")
-xresources.set_dpi(96) -- Or 110, 120, etc., based on your screen
+xresources.set_dpi(130) -- Or 110, 120, etc., based on your screen
 
 local opacity_val = 0.95
 
@@ -110,6 +110,7 @@ local obs = "obs"
 local kdenlive = "kdenlive"
 local terminal = "st"
 local st_command = terminal .. " -c st-256color"
+local image_editor = "gimp"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -585,6 +586,9 @@ globalkeys = mytable.join(
 	awful.key({ modkey }, "e", function()
 		awful.spawn.with_shell(kdenlive)
 	end, { description = "run Kdenlive", group = "launcher" }),
+	awful.key({ modkey }, "i", function()
+		awful.spawn(image_editor)
+	end, { description = "run " .. image_editor, group = "launcher" }),
 
 	-- Default
 	--[[ Menubar

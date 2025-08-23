@@ -572,7 +572,7 @@ vim.keymap.set("n", "<leader>sk", fzf.keymaps, { desc = "[S]earch [K]eymaps" })
 vim.keymap.set("n", "<leader>sm", fzf.manpages, { desc = "[S]earch [M]an Pages" })
 
 -- format code
-keymap("n", "<leader>c", require("conform").format)
+keymap("n", "<leader>f", require("conform").format)
 
 -- toggle search result highlight
 keymap("n", "<leader>h", "<CMD>set hlsearch!<CR>")

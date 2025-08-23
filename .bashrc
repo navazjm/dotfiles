@@ -1,5 +1,6 @@
 export PATH="$HOME/.local/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/.local/lib64:$LD_LIBRARY_PATH" # needed for OBS
+export EDITOR="/usr/local/bin/nvim"
 
 #Azile shell prompt
 eval "$(azile init bash)"

@@ -22,7 +22,6 @@ alias POWEROFF="sudo poweroff"
 alias sb="source ~/.bashrc"
 alias lg="lazygit"
 alias sp="spotify_player"
-alias ps2="$HOME/tools/ps2.AppImage"
 
 #replace ls with eza
 alias ls="eza -lahF --icons --classify"

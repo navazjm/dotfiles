@@ -26,6 +26,7 @@ link_file "$HOME/.config/dotfiles/.gitconfig" "$HOME/.gitconfig"
 link_file "$HOME/.config/dotfiles/spotify-player/app.toml" "$HOME/.config/spotify-player/app.toml"
 link_file "$HOME/.config/dotfiles/st/config.h" "$HOME/tools/st/config.h"
 link_file "$HOME/.config/dotfiles/.screenlayout/layout.sh" "$HOME/.screenlayout/layout.sh"
+link_file "$HOME/.config/dotfiles/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc"
 
 # dir symlinks
 link_file "$HOME/.config/dotfiles/nvim" "$HOME/.config/nvim"

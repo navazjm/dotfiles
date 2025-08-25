@@ -16,6 +16,7 @@ export NVM_DIR="$HOME/.nvm"
 
 ## Aliases
 
+alias ZZZ="xset dpms force off" # turns off monitors
 alias LOGOUT="pkill awesome"
 alias REBOOT="sudo reboot"
 alias POWEROFF="sudo poweroff"

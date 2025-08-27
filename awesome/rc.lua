@@ -555,6 +555,11 @@ globalkeys = mytable.join(
 		awful.spawn.with_shell("xsel -b | xsel")
 	end, { description = "copy gtk to terminal", group = "hotkeys" }),
 
+    -- Capture screenshot of area selection
+	awful.key({ modkey, "Shift" }, "s", function()
+		awful.spawn.with_shell("scrot -s ~/pictures/screenshots/%d-%m-%Y_%H%M%S.png -e 'xdg-open ~/pictures/screenshots'")
+	end, { description = "Capture screenshot", group = "hotkeys" }),
+
 	-- User programs
 	awful.key({ modkey }, "b", function()
 		awful.spawn(browser)

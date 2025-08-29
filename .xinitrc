@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# apply monitor(s) layout
 ~/.screenlayout/layout.sh &
 
 # Start tmux sessions if they don't already exist
@@ -9,6 +10,8 @@ tmux has-session -t lazypm 2>/dev/null || tmux new-session -d -s lazypm -c ~/dev
 tmux has-session -t spotify_player 2>/dev/null || tmux new-session -d -s spotify_player
 tmux has-session -t remembrall 2>/dev/null || tmux new-session -d -s remembrall -c ~/dev/remembrall
 
-export XCURSOR_SIZE=14
+# trigger xsecurelock after 5 minutes -- screenlock -> ~/.local/bin/screenlock
+xautolock -time 5 -locker screenlock -detectsleep &
 
+export XCURSOR_SIZE=14
 exec awesome

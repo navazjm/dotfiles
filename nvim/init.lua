@@ -83,13 +83,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
 })
 
+-- help recognize razor files
+vim.filetype.add({
+    extension = {
+        razor = "razor",
+        cshtml = "razor",
+    },
+})
+
 -------------------------------------------------------------------------------
 -- PLUGINS --
 -------------------------------------------------------------------------------
 
 vim.pack.add({
     -- dependencies
-    --
     { src = "https://github.com/nvim-lua/plenary.nvim" }, -- utility lib that some plugins depend on...
     { src = "https://github.com/nvim-tree/nvim-web-devicons" }, -- NerdFont icons
     { src = "https://git.sr.ht/~whynothugo/lsp_lines.nvim" }, -- virtual line diagnostics
@@ -106,14 +113,13 @@ vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }, -- better syntax highlighting
     { src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" }, -- better code comment for files with multiple languages, like react
     { src = "https://github.com/stevearc/oil.nvim" }, -- file tree
-})
 
+    -- razor lsp
+    { src = "https://github.com/tris203/rzls.nvim" },
+    { src = "https://github.com/seblyng/roslyn.nvim" },
+})
 require("lsp_lines").setup({})
-local lspconfig = require("lspconfig")
-lspconfig.bashls.setup({})
-lspconfig.clangd.setup({})
-lspconfig.cmake.setup({})
-lspconfig.lua_ls.setup({
+vim.lsp.config("lua_ls", {
     settings = {
         Lua = {
             runtime = { version = "LuaJIT" },
@@ -121,6 +127,27 @@ lspconfig.lua_ls.setup({
             workspace = { library = vim.api.nvim_get_runtime_file("", true) },
             telemetry = { enable = false },
         },
+    },
+})
+local rzls_base_path = vim.fn.expand("~/tools/razor/artifacts/LanguageServer/Debug/net9.0/linux-x64")
+require("rzls").setup({
+    path = vim.fs.joinpath(rzls_base_path, "rzls"),
+    on_attach = function(client, bufnr) end,
+    capabilities = {},
+})
+vim.lsp.config("roslyn", {
+    handlers = require("rzls.roslyn_handlers"),
+    cmd = {
+        "dotnet",
+        vim.fn.expand("~/tools/roslyn/Microsoft.CodeAnalysis.LanguageServer.dll"),
+        "--stdio",
+        "--logLevel=Information",
+        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.log.get_filename()),
+        "--razorSourceGenerator=" .. vim.fs.joinpath(rzls_base_path, "Microsoft.CodeAnalysis.Razor.Compiler.dll"),
+        "--razorDesignTimePath="
+            ..vim.fs.joinpath(rzls_base_path, "Targets", "Microsoft.NET.Sdk.Razor.DesignTime.targets"),
+        "--extension",
+        vim.fn.expand("~/tools/razor/artifacts/bin/Microsoft.VisualStudioCode.RazorExtension/Debug/net9.0/Microsoft.VisualStudioCode.RazorExtension.dll"),
     },
 })
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -164,6 +191,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 }) -- end LspAttach
 vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
+vim.lsp.enable({"bashls", "clangd", "cmake", "lua_ls", "roslyn"})
 
 require("Comment").setup({
     pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
@@ -256,6 +284,13 @@ end
 local lualine_spaces = function()
     return "spaces: " .. vim.bo[0].shiftwidth
 end
+local lualine_solution = function()
+    local sln = vim.g.roslyn_nvim_selected_solution
+    if sln == nil then
+        return ""
+    end
+    return sln
+end
 
 require("lualine").setup({
     options = {
@@ -313,7 +348,7 @@ require("lualine").setup({
                 end,
             },
         },
-        lualine_x = { lualine_spaces, "encoding" },
+        lualine_x = { lualine_solution, lualine_spaces, "encoding" },
         lualine_y = {
             {
                 "location",
@@ -390,83 +425,130 @@ require("nvim-navic").setup({
     end,
 }) -- end nvim-navic
 
-require("nvim-treesitter").setup({
-    ensure_installed = "maintained",
+local ensure_installed = {
+    "angular",
+    "bash",
+    "c",
+    "c_sharp",
+    "cpp",
+    "css",
+    "dockerfile",
+    "editorconfig",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "luadoc",
+    "make",
+    "markdown",
+    "markdown_inline",
+    "powershell",
+    "razor",
+    "regex",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "yaml",
+}
+local treesitter = require("nvim-treesitter")
+treesitter.setup({
+    -- A list of parser names, or "all" (the listed parsers MUST always be installed)
+    ensure_installed = ensure_installed,
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+    -- Automatically install missing parsers when entering buffer
+    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
     auto_install = true,
-    sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-    autopairs = {
-        enable = true,
-    },
+    -- List of parsers to ignore installing (or "all")
+    ignore_install = {},
     highlight = {
-        enable = true, -- false will disable the whole extension
-        disable = { "" }, -- list of language that will be disabled
-        additional_vim_regex_highlighting = true,
-    },
-    indent = { enable = true, disable = { "yaml" } },
-    incremental_selection = {
         enable = true,
-        keymaps = {
-            init_selection = "<c-space>",
-            node_incremental = "<c-space>",
-            scope_incremental = "<c-s>",
-            node_decremental = "<c-backspace>",
-        },
+        -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+        -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+        -- the name of the parser)
+        --
+        -- list of language that will be disabled
+        -- disable = { "c", "rust" },
+        --
+        -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+        disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
     },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-            keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ["aa"] = "@parameter.outer",
-                ["ia"] = "@parameter.inner",
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-            },
-        },
-        move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-                ["]m"] = "@function.outer",
-                ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-                ["]M"] = "@function.outer",
-                ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-                ["[m"] = "@function.outer",
-                ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-                ["[M"] = "@function.outer",
-                ["[]"] = "@class.outer",
-            },
-        },
-        swap = {
-            enable = true,
-            swap_next = {
-                ["<leader>a"] = "@parameter.inner",
-            },
-            settings = {
+})
+local already_installed = treesitter.get_installed()
+local parsers_to_install = vim.iter(ensure_installed)
+    :filter(function(parser)
+        return not vim.tbl_contains(already_installed, parser)
+    end)
+    :totable()
+treesitter.install(parsers_to_install)
+-- Auto-install and start parsers for any buffer
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    desc = "Enable Treesitter",
+    callback = function(event)
+        local bufnr = event.buf
+        local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
-                Lua = {
+        -- Skip if no filetype
+        if filetype == "" then
+            return
+        end
 
-                    runtime = { version = "LuaJIT" },
+        -- Get parser name based on filetype
+        local parser_name = vim.treesitter.language.get_lang(filetype)
+        if not parser_name then
+            vim.notify(
+                vim.inspect("No treesitter parser found for filetype: " .. filetype),
+                vim.log.levels.WARN
+            )
+            return
+        end
 
-                    diagnostics = { globals = { "vim" } },
-                },
-            },
+        -- Try to get existing parser
+        local parser_configs = require("nvim-treesitter.parsers")
+        if not parser_configs[parser_name] then
+            return -- Parser not available, skip silently
+        end
 
-            swap_previous = {
-                ["<leader>A"] = "@parameter.inner",
-            },
-        },
-    },
-}) -- end nvim-treesitter
+        local parser_exists = pcall(vim.treesitter.get_parser, bufnr, parser_name)
+
+        if not parser_exists then
+            -- check if parser is already installed
+            if vim.tbl_contains(already_installed, parser_name) then
+                vim.notify(
+                    "Parser for " .. parser_name .. " already installed.",
+                    vim.log.levels.INFO
+                )
+            else
+                -- If not installed, install parser synchronously
+                vim.notify("Installing parser for " .. parser_name, vim.log.levels.INFO)
+                treesitter.install({ parser_name }):wait(300000) -- wait max. 5 minutes
+            end
+        end
+
+        -- Start treesitter for this buffer
+        vim.treesitter.start(bufnr, parser_name)
+        -- Use regex based syntax-highlighting as fallback as some plugins might need it
+        vim.bo[bufnr].syntax = "ON"
+        -- Use treesitter for folds
+        vim.wo.foldlevel = 99
+        vim.wo.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo.foldtext = "v:lua.vim.treesitter.foldtext()"
+        -- Use treesitter for indentation
+        vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
 
 require("oil").setup({
     columns = { "icon" },
@@ -631,6 +713,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "compilation",
     callback = function()
         keymap("n", "r", ":Recompile<CR>", { buffer = true, silent = true })
+        keymap("n", "x", ":CompileInterrupt<CR>", { buffer = true, silent = true })
         -- follow pattern of cycling through search results
         keymap("n", "n", ":NextError<CR>", { buffer = true, silent = true })
         keymap("n", "N", ":PrevError<CR>", { buffer = true, silent = true })
